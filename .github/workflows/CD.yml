@@ -88,7 +88,9 @@ jobs:
           script: |
             sudo docker stop zigzzang
             sudo docker rm zigzzang
+            sudo docker pull ulsandonghun/zigzzang
             sudo docker run -it -d -p 8080:8080 --name zigzzang ulsandonghun/zigzzang
+            docker rmi -f $(docker images -f "dangling=true" -q)
 
       # REMOVE Github IP FROM security group (9)
       - name: Remove IP FROM security group
