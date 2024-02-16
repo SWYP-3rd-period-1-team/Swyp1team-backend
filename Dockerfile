@@ -9,4 +9,4 @@ ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} app.jar
 
 # docker container에서 실행되는 명령어
-ENTRYPOINT ["java","-jar","-DDB_DRIVER=com.mysql.cj.jdbc.Driver","-DDB_PASSWORD=vdongv1620","-DDB_URL=jdbc:mysql://zigzzang-db.c74u6wukkm5o.ap-northeast-2.rds.amazonaws.com:3306/zigzzang","-DDB_USER=admin","/app.jar"]
+ENTRYPOINT ["java","-jar","/app.jar"]
