@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동훈이의 게임</title>
+    <style>
+        body {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .game-container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 30px;
+        }
+
+        #character {
+            width: 50px;
+            height: 50px;
+            background-color: #e74c3c;
+            position: relative;
+            transition: all 0.2s;
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <h1>동훈이의 게임</h1>
+    <div id="character"></div>
+</div>
+
+<script>
+    document.addEventListener("keydown", function(event) {
+        const character = document.getElementById("character");
+        let x = 0;
+        let y = 0;
+
+        switch(event.key) {
+            case "ArrowUp":
+                y -= 10;
+                break;
+            case "ArrowDown":
+                y += 10;
+                break;
+            case "ArrowLeft":
+                x -= 10;
+                break;
+            case "ArrowRight":
+                x += 10;
+                break;
+        }
+
+        character.style.transform = `translate(${x}px, ${y}px)`;
+    });
+</script>
+</body>
+</html>
