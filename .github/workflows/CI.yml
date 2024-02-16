@@ -42,18 +42,3 @@ jobs:
       # Spring Boot 어플리케이션 Build (1)
       - name: Spring Boot Build
         run: ./gradlew clean build -x test
-
-      # Docker 이미지 Build (2) : 최동훈 도커허브이용
-      - name: docker image build
-        run: docker build -t ulsandonghun/zigzzang .
-
-      # DockerHub Login (3)
-      - name: docker login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # Docker Hub push (4)
-      - name: docker Hub push
-        run: docker push ulsandonghun/zigzzang
