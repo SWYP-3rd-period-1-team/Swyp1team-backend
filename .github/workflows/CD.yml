@@ -88,7 +88,6 @@ jobs:
           script: |
             sudo docker stop zigzzang
             sudo docker rm zigzzang
-            docker rmi -f ulsandonghun/zigzzang
             sudo docker pull ulsandonghun/zigzzang
             
             sudo docker run -it -d -p 8080:8080 \
