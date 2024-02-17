@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://zigzzang-db.c74u6wukkm5o.ap-northeast-2.rds.amazonaws.com:3306/zigzzang
+    url: jdbc:mysql://3.36.251.109:3306/zigzzang
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: admin
+    username: root
     password: vdongv1620
     hikari:
       maximum-pool-size: 20
