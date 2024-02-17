@@ -24,6 +24,18 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      #githubsecrets yml 환경변수 주입.
+      - name: Set Yaml
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: ./src/main/resources/application.yml
+        env:
+          spring.datasource.url: ${{ secrets.DB_URL }}
+          spring.datasource.username: ${{ secrets.DB_USERNAME }}
+          spring.datasource.password: ${{ secrets.DB_PASSWORD }}
+          spring.datasource.driver-class-name: ${{ secrets.DB_DRIVER }}
+
+
       #gradlew 실행을 위한 권한 추가
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -79,8 +91,7 @@ jobs:
             sudo docker rm zigzzang
             sudo docker pull ulsandonghun/zigzzang
             
-            sudo docker run -it -d -p 8080:8080 --name zigzzang ulsandonghun/zigzzang
-            
+            sudo docker run -it -d -p 8080:8080 -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} -e SPRING_DATASOURCE_DRIVER=${{ secrets.DB_DRIVER }} --name zigzzang ulsandonghun/zigzzang
             
             docker rmi -f $(docker images -f "dangling=true" -q)
 
