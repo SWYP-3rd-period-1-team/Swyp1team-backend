@@ -92,6 +92,8 @@ jobs:
             sudo docker stop zigzzang
             sudo docker rm zigzzang
             sudo docker pull ulsandonghun/zigzzang
+            
+            
             sudo docker run -it -d -p 8080:8080 \
             -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
             -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} \
