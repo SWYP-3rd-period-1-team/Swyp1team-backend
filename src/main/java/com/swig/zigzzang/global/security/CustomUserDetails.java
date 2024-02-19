@@ -1,9 +1,8 @@
 package com.swig.zigzzang.global.security;
 
-import com.swig.zigzzang.member.Member;
+import com.swig.zigzzang.member.domain.Member;
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails implements UserDetails {

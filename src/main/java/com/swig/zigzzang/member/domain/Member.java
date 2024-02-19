@@ -1,4 +1,4 @@
-package com.swig.zigzzang.member;
+package com.swig.zigzzang.member.domain;
 
 import com.swig.zigzzang.MemberHospital.MemberHospital;
 import jakarta.persistence.Column;
@@ -14,12 +14,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Getter
+@Setter
 public class Member {
 
     @Id
