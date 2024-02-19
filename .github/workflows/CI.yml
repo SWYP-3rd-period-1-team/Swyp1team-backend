@@ -34,6 +34,8 @@ jobs:
           spring.datasource.url: ${{ secrets.DB_URL }}
           spring.datasource.username: ${{ secrets.DB_USERNAME }}
           spring.datasource.password: ${{ secrets.DB_PASSWORD }}
+          spring.datasource.driver-class-name: ${{ secrets.DB_DRIVER }}
+          spring.jwt.secret: ${{ secrets.JWT_SECRET }}
 
       #gradlew 실행을 위한 권한 추가
       - name: Grant execute permission for gradlew

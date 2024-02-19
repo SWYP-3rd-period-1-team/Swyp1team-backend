@@ -17,6 +17,8 @@ spring:
     hibernate:
       ddl-auto: create
     defer-datasource-initialization: true
+  jwt:
+    secret: ${jwt_secret}
 
 
 logging:
