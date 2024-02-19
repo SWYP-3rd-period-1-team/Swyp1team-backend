@@ -24,6 +24,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+
       #githubsecrets yml 환경변수 주입.
       - name: Set Yaml
         uses: microsoft/variable-substitution@v1
@@ -84,28 +85,24 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
-          key: ${{ secrets.EC2_PEMKEY }}
+          password: ${{ secrets.EC2_PASSWORD }}
           port: ${{ secrets.EC2_SSH_PORT }}
           timeout: 60s
           script: |
             sudo docker stop zigzzang
             sudo docker rm zigzzang
             sudo docker pull ulsandonghun/zigzzang
-
-
             sudo docker run -it -d -p 8080:8080 \
             -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
             -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} \
             -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} \
             -e SPRING_DATASOURCE_DRIVER=${{ secrets.DB_DRIVER }} \
-            -e SPRING_JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            -e SPRING_JWT_SECRET=${{ secrets.JWT_SECRET }}\
             --name zigzzang ulsandonghun/zigzzang
-
             
             docker rmi -f $(docker images -f "dangling=true" -q)
 
       # REMOVE Github IP FROM security group (9)
-
       - name: Remove IP FROM security group
         run: |
           aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
