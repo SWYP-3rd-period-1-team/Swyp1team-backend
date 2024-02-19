@@ -93,7 +93,13 @@ jobs:
             sudo docker pull ulsandonghun/zigzzang
 
 
-            sudo docker run -it -d -p 8080:8080 -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} -e SPRING_DATASOURCE_DRIVER=${{ secrets.DB_DRIVER }} -e SPRING_JWT_SECRET=${{ secrets.JWT_SECRET }} --name zigzzang ulsandonghun/zigzzang
+            sudo docker run -it -d -p 8080:8080 \
+            -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
+            -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} \
+            -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            -e SPRING_DATASOURCE_DRIVER=${{ secrets.DB_DRIVER }} \
+            -e SPRING_JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            --name zigzzang ulsandonghun/zigzzang
 
             
             docker rmi -f $(docker images -f "dangling=true" -q)
