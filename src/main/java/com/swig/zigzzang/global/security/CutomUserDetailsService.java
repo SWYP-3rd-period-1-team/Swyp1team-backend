@@ -1,6 +1,6 @@
 package com.swig.zigzzang.global.security;
 
-import com.swig.zigzzang.member.Member;
+import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.repository.MemberRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
