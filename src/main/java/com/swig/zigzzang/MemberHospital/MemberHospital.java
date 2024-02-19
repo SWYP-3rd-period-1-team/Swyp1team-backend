@@ -1,7 +1,7 @@
 package com.swig.zigzzang.MemberHospital;
 
 import com.swig.zigzzang.hospital.Hospital;
-import com.swig.zigzzang.member.Member;
+import com.swig.zigzzang.member.domain.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
