@@ -1,6 +1,7 @@
 package com.swig.zigzzang.member.domain;
 
 import com.swig.zigzzang.MemberHospital.MemberHospital;
+import com.swig.zigzzang.survey.domain.Survey;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,5 +45,6 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<MemberHospital> memberHospitals = new ArrayList<>();
 
-    // 추가 코드 생략
+    @OneToMany(mappedBy = "member")
+    private List<Survey> surveys;
 }
