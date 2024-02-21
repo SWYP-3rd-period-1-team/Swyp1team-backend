@@ -5,7 +5,7 @@ import lombok.Builder;
 
 @Builder
 public record MemberJoinResponse(
-        Long id, String userid,String password,String email,String nickname
+        String surveyUrl,String message
 
 
 ) {
@@ -13,11 +13,8 @@ public record MemberJoinResponse(
 
     public static MemberJoinResponse of(Member member) {
         return MemberJoinResponse.builder()
-                .id(member.getMemberId())
-                .userid(member.getUserId())
-                .email(member.getEmail())
-                .password(member.getPassword())
-                .nickname(member.getNickname())
+                .message(member.getNickname()+"님 회원가입을 축하합니다 !")
+                .surveyUrl("example.com")
                 .build();
 
     }

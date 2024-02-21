@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ResponseBody
 public class MainController {
     @GetMapping("/userinfo")
-    @Operation
+
     public String main() {
         String username= SecurityContextHolder.getContext().getAuthentication()
                 .getName();
