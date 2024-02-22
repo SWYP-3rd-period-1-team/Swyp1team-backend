@@ -11,6 +11,15 @@ java {
 	sourceCompatibility = '17'
 }
 
+bootJar {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+jar {
+	enabled = false
+}
+
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -31,6 +40,12 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
+	// QueryDSL 설정
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
 	//스웨거
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
@@ -48,6 +63,7 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-jar {
-	enabled = false
+
+clean {
+	delete file('src/main/generated')
 }
