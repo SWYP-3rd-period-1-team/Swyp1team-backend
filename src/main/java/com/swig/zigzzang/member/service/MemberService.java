@@ -1,8 +1,11 @@
 package com.swig.zigzzang.member.service;
 
+import com.swig.zigzzang.email.dto.EmailResponseDto;
 import com.swig.zigzzang.email.service.EmailService;
+import com.swig.zigzzang.global.exception.HttpExceptionCode;
 import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
+import com.swig.zigzzang.member.exception.MemberExistException;
 import com.swig.zigzzang.member.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
@@ -53,7 +56,7 @@ public class MemberService {
         Optional<Member> member = memberRepository.findByEmail(email);
         if (member.isPresent()) {
             log.debug("MemberServiceImpl.checkDuplicatedEmail exception occur email: {}", email);
-            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+            throw new MemberExistException(HttpExceptionCode.MEMBER_EXISTS);
         }
     }
 
@@ -68,16 +71,16 @@ public class MemberService {
             return builder.toString();
         } catch (NoSuchAlgorithmException e) {
             log.debug("MemberService.createCode() exception occur");
-            throw new BusinessLogicException(ExceptionCode.NO_SUCH_ALGORITHM);
+            throw new MemberExistException(HttpExceptionCode.MEMBER_EXISTS);
         }
     }
 
-    public EmailVerificationResult verifiedCode(String email, String authCode) {
+    public EmailResponseDto verifiedCode(String email, String authCode) {
         this.checkDuplicatedEmail(email);
         String redisAuthCode = redisService.getValues(AUTH_CODE_PREFIX + email);
         boolean authResult = redisService.checkExistsValue(redisAuthCode) && redisAuthCode.equals(authCode);
 
-        return EmailVerificationResult.of(authResult);
+        return EmailResponseDto.of(authResult);
     }
 
 }

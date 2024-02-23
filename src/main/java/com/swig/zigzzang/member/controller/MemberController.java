@@ -1,5 +1,6 @@
 package com.swig.zigzzang.member.controller;
 
+import com.swig.zigzzang.email.dto.EmailResponseDto;
 import com.swig.zigzzang.global.response.HttpResponse;
 import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
@@ -42,7 +43,7 @@ public class MemberController {
     @GetMapping("/emails/verifications")
     public ResponseEntity verificationEmail(@RequestParam("email") @Valid  String email,
                                             @RequestParam("code") String authCode) {
-        EmailVerificationResult response = memberService.verifiedCode(email, authCode);
+        EmailResponseDto response = memberService.verifiedCode(email, authCode);
 
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
