@@ -1,5 +1,7 @@
 package com.swig.zigzzang.email.service;
 
+import com.swig.zigzzang.email.exception.EmailNotSendException;
+import com.swig.zigzzang.global.exception.HttpExceptionCode;
 import com.swig.zigzzang.member.service.MemberService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -30,7 +32,7 @@ public class EmailService {
         } catch (RuntimeException e) {
             log.debug("MailService.sendEmail exception occur toEmail: {}, " +
                     "title: {}, text: {}", toEmail, title, text);
-            throw new BusinessLogicException(ExceptionCode.UNABLE_TO_SEND_EMAIL);
+            throw new EmailNotSendException(HttpExceptionCode.UNABLE_TO_SEND_EMAIL);
         }
     }
 
