@@ -1,5 +1,7 @@
 package com.swig.zigzzang.global.security;
 
+import jakarta.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -18,7 +22,8 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
 
     private final JWTUtil jwtUtil;
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration,JWTUtil jwtUtil) {
+
+    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil) {
 
         this.authenticationConfiguration = authenticationConfiguration;
         this.jwtUtil = jwtUtil;
@@ -35,12 +40,34 @@ public class SecurityConfig {
 
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         //csrf disable
         http
                 .csrf((auth) -> auth.disable());
+
+        //cors 설정
+        http
+                .cors((corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+
+                        CorsConfiguration configuration = new CorsConfiguration();
+
+                        configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
+                        configuration.setAllowedMethods(Collections.singletonList("*"));
+                        configuration.setAllowCredentials(true);
+                        configuration.setAllowedHeaders(Collections.singletonList("*"));
+                        configuration.setMaxAge(3600L);
+
+                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+
+                        return configuration;
+                    }
+                })));
 
         //From 로그인 방식 disable
         http
@@ -54,17 +81,16 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/**").permitAll()
-                        .requestMatchers( "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         //스웨거 접근권한 허용
                         .anyRequest().authenticated());
 
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
 
-
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil), UsernamePasswordAuthenticationFilter.class);
-
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
+                        UsernamePasswordAuthenticationFilter.class);
 
         //세션 설정
         http
