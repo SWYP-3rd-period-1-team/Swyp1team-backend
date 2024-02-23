@@ -1,6 +1,8 @@
 package com.swig.zigzzang.email.controller;
 
 import com.swig.zigzzang.email.dto.EmailResponseDto;
+import com.swig.zigzzang.email.dto.EmailSendSuccessResponse;
+import com.swig.zigzzang.global.response.HttpResponse;
 import com.swig.zigzzang.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +21,16 @@ public class EmailController {
     private final MemberService memberService;
 
 
-    @PostMapping("/emails/verification-requests")
-    public ResponseEntity sendMessage(@RequestParam("email") @Valid String email) {
+    @PostMapping("/verification-requests")
+    public HttpResponse<EmailSendSuccessResponse> sendMessage(@RequestParam("email") @Valid String email) {
         memberService.sendCodeToEmail(email);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return HttpResponse.okBuild(
+                EmailSendSuccessResponse.of(email)
+        );
     }
 
-    @GetMapping("/emails/verifications")
+    @GetMapping("/verifications")
     public ResponseEntity verificationEmail(@RequestParam("email") @Valid  String email,
                                             @RequestParam("code") String authCode) {
         EmailResponseDto response = memberService.verifiedCode(email, authCode);
