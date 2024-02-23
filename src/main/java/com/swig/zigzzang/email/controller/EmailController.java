@@ -2,6 +2,7 @@ package com.swig.zigzzang.email.controller;
 
 import com.swig.zigzzang.email.dto.EmailResponseDto;
 import com.swig.zigzzang.email.dto.EmailSendSuccessResponse;
+import com.swig.zigzzang.email.dto.EmailVerifySuccessResponse;
 import com.swig.zigzzang.global.response.HttpResponse;
 import com.swig.zigzzang.member.service.MemberService;
 import jakarta.validation.Valid;
@@ -31,10 +32,12 @@ public class EmailController {
     }
 
     @GetMapping("/verifications")
-    public ResponseEntity verificationEmail(@RequestParam("email") @Valid  String email,
-                                            @RequestParam("code") String authCode) {
+    public HttpResponse<EmailVerifySuccessResponse> verificationEmail(@RequestParam("email") @Valid  String email,
+                                                                      @RequestParam("code") String authCode) {
         EmailResponseDto response = memberService.verifiedCode(email, authCode);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return HttpResponse.okBuild(
+                EmailVerifySuccessResponse.of()
+        );
     }
 }
