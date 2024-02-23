@@ -3,6 +3,7 @@ package com.swig.zigzzang.member.service;
 import com.swig.zigzzang.email.dto.EmailResponseDto;
 import com.swig.zigzzang.email.service.EmailService;
 import com.swig.zigzzang.global.exception.HttpExceptionCode;
+import com.swig.zigzzang.global.redis.RedisService;
 import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.exception.MemberExistException;
@@ -30,6 +31,8 @@ public class MemberService {
     private long authCodeExpirationMillis;
     private static final String AUTH_CODE_PREFIX = "AuthCode ";
     private final EmailService mailService;
+    private final RedisService redisService;
+
 
 
     public Member save(MemberJoinRequest memberJoinRequest) {

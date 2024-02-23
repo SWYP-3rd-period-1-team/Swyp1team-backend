@@ -45,7 +45,7 @@ public class MemberController {
                                             @RequestParam("code") String authCode) {
         EmailResponseDto response = memberService.verifiedCode(email, authCode);
 
-        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
