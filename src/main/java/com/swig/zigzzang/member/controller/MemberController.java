@@ -33,19 +33,6 @@ public class MemberController {
                 MemberJoinResponse.of(savedmember)
         );
     }
-    @PostMapping("/emails/verification-requests")
-    public ResponseEntity sendMessage(@RequestParam("email") @Valid  String email) {
-        memberService.sendCodeToEmail(email);
 
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/emails/verifications")
-    public ResponseEntity verificationEmail(@RequestParam("email") @Valid  String email,
-                                            @RequestParam("code") String authCode) {
-        EmailResponseDto response = memberService.verifiedCode(email, authCode);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
 
 }
