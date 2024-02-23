@@ -98,7 +98,7 @@ jobs:
             sudo docker stop zigzzang
             sudo docker rm zigzzang
             sudo docker pull ulsandonghun/zigzzang
-            sudo docker run -i -p 8080:8080 --name zigzzang -d ulsandonghun/zigzzang
+            sudo docker run -it -p 8080:8080 --name zigzzang -d ulsandonghun/zigzzang
             
             docker rmi -f $(docker images -f "dangling=true" -q)
 
