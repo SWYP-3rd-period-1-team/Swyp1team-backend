@@ -93,6 +93,8 @@ jobs:
           port: ${{ secrets.EC2_SSH_PORT }}
           timeout: 60s
           script: |
+            echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+            
             sudo docker stop zigzzang
             sudo docker rm zigzzang
             sudo docker pull ulsandonghun/zigzzang
