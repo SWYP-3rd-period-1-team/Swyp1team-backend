@@ -34,10 +34,10 @@ public class EmailController {
     @GetMapping("/verifications")
     public HttpResponse<EmailVerifySuccessResponse> verificationEmail(@RequestParam("email") @Valid  String email,
                                                                       @RequestParam("code") String authCode) {
-        EmailResponseDto response = memberService.verifiedCode(email, authCode);
+        Boolean result = memberService.verifiedCode(email, authCode);
 
         return HttpResponse.okBuild(
-                EmailVerifySuccessResponse.of()
+                EmailVerifySuccessResponse.of(result)
         );
     }
 }

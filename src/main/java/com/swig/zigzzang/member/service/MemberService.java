@@ -77,13 +77,13 @@ public class MemberService {
         }
     }
 
-    public EmailResponseDto verifiedCode(String email, String authCode) {
+    public Boolean verifiedCode(String email, String authCode) {
         this.checkDuplicatedEmail(email);
         String redisAuthCode = redisService.getValues(AUTH_CODE_PREFIX + email);
         //현재 redis 저장값과 비교(redis 저장코드는 이메일 송신시마다 overwrite)
         boolean authResult = redisService.checkExistsValue(redisAuthCode) && redisAuthCode.equals(authCode);
 
-        return EmailResponseDto.of(authResult);
+        return authResult;
     }
 
 }
