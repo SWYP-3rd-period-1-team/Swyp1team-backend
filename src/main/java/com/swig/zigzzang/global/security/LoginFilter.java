@@ -1,6 +1,7 @@
 package com.swig.zigzzang.global.security;
 
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -53,6 +54,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         response.addHeader("Authorization", "Bearer " + accessToken);
         response.addHeader("RefreshToken","Bearer "+refreshToken);
+        Cookie cookie = createCookie(refreshToken);
+        response.addCookie(cookie);
+
 
     }
 
@@ -60,5 +64,17 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) {
 
         response.setStatus(401);
+    }
+    public Cookie createCookie(String refreshToken) {
+        String cookieName = "refreshtoken";
+        String cookieValue = refreshToken;
+        Cookie cookie = new Cookie(cookieName, cookieValue);
+
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24 * 7);
+
+        return cookie;
     }
 }
