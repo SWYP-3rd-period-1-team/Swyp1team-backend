@@ -8,6 +8,7 @@ import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.exception.MemberExistException;
 import com.swig.zigzzang.member.exception.NickNameAlreadyExistException;
+import com.swig.zigzzang.member.exception.UserIdAlreadyExistException;
 import com.swig.zigzzang.member.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
@@ -40,10 +41,14 @@ public class MemberService {
         Member member = memberJoinRequest.toEntity();
 
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
-        memberRepository.findByUserId(member.getUserId())
-                .ifPresent( MemberExistException::new);
-        memberRepository.findByNickname(member.getNickname())
-                .orElseThrow(NickNameAlreadyExistException::new);
+        Optional<Member> userId = memberRepository.findByUserId(member.getUserId());
+        if (userId.isPresent()) {
+            throw new UserIdAlreadyExistException();
+        }
+        Optional<Member> nickname = memberRepository.findByNickname(member.getNickname());
+        if (nickname.isPresent()) {
+            throw new NickNameAlreadyExistException();
+        }
 
         Member savedmember = memberRepository.save(member);
 

@@ -22,8 +22,5 @@ public class MemberExistException extends RuntimeException{
         this(HttpExceptionCode.MEMBER_EXISTS);
     }
 
-    public MemberExistException(Member member) {
-        this(HttpExceptionCode.MEMBER_EXISTS);
 
-    }
 }

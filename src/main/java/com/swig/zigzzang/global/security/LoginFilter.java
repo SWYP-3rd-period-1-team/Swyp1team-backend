@@ -67,7 +67,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     }
     public Cookie createCookie(String refreshToken) {
         String cookieName = "refreshtoken";
-        String cookieValue = refreshToken;
+        String cookieValue = "Bearer "+refreshToken;
         Cookie cookie = new Cookie(cookieName, cookieValue);
 
         cookie.setHttpOnly(true);
