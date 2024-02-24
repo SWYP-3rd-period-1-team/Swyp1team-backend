@@ -41,7 +41,7 @@ public class MemberService {
 
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
         memberRepository.findByUserId(member.getUserId())
-                .orElseThrow(MemberExistException::new);
+                .ifPresent( MemberExistException::new);
         memberRepository.findByNickname(member.getNickname())
                 .orElseThrow(NickNameAlreadyExistException::new);
 

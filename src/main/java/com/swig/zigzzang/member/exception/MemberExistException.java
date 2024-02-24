@@ -1,6 +1,7 @@
 package com.swig.zigzzang.member.exception;
 
 import com.swig.zigzzang.global.exception.HttpExceptionCode;
+import com.swig.zigzzang.member.domain.Member;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -19,5 +20,10 @@ public class MemberExistException extends RuntimeException{
 
     public MemberExistException() {
         this(HttpExceptionCode.MEMBER_EXISTS);
+    }
+
+    public MemberExistException(Member member) {
+        this(HttpExceptionCode.MEMBER_EXISTS);
+
     }
 }
