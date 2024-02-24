@@ -3,24 +3,19 @@ package com.swig.zigzzang.member.exception;
 import com.swig.zigzzang.global.exception.HttpExceptionCode;
 import com.swig.zigzzang.member.domain.Member;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
 @Getter
-@Setter
-@Slf4j
-public class MemberExistException extends RuntimeException{
+public class NickNameAlreadyExistException extends RuntimeException{
     private final HttpStatus httpStatus;
 
-    public MemberExistException(HttpExceptionCode exceptionCode) {
+    public NickNameAlreadyExistException(HttpExceptionCode exceptionCode) {
         super(exceptionCode.getMessage());
         this.httpStatus = exceptionCode.getHttpStatus();
     }
 
-    public MemberExistException() {
-        this(HttpExceptionCode.MEMBER_EXISTS);
+    public NickNameAlreadyExistException() {
+        this(HttpExceptionCode.NICKNAME_EXIST);
     }
-
 
 }

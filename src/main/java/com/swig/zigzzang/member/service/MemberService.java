@@ -7,6 +7,8 @@ import com.swig.zigzzang.global.redis.RedisService;
 import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.exception.MemberExistException;
+import com.swig.zigzzang.member.exception.NickNameAlreadyExistException;
+import com.swig.zigzzang.member.exception.UserIdAlreadyExistException;
 import com.swig.zigzzang.member.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
@@ -39,6 +41,14 @@ public class MemberService {
         Member member = memberJoinRequest.toEntity();
 
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+        Optional<Member> userId = memberRepository.findByUserId(member.getUserId());
+        if (userId.isPresent()) {
+            throw new UserIdAlreadyExistException();
+        }
+        Optional<Member> nickname = memberRepository.findByNickname(member.getNickname());
+        if (nickname.isPresent()) {
+            throw new NickNameAlreadyExistException();
+        }
 
         Member savedmember = memberRepository.save(member);
 
@@ -50,7 +60,6 @@ public class MemberService {
         String title = "직짱건강 이메일 인증 번호";
         String authCode = this.createCode();
         mailService.sendEmail(toEmail, title, authCode);
-        // 이메일 인증 요청 시 인증 번호 Redis에 저장 ( key = "AuthCode " + Email / value = AuthCode )
         redisService.setValues(AUTH_CODE_PREFIX + toEmail,
                 authCode, Duration.ofMillis(this.authCodeExpirationMillis));
     }
@@ -72,7 +81,6 @@ public class MemberService {
             }
             return builder.toString();
         } catch (NoSuchAlgorithmException e) {
-            log.debug("MemberService.createCode() exception occur");
             throw new MemberExistException(HttpExceptionCode.MEMBER_EXISTS);
         }
     }
