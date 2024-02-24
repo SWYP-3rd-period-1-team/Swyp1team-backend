@@ -1,6 +1,7 @@
 package com.swig.zigzzang.global.exception.handler;
 
 import com.swig.zigzzang.global.exception.HttpExceptionCode;
+import com.swig.zigzzang.global.exception.custom.BuisnessException.BusinessException;
 import com.swig.zigzzang.global.response.ErrorResponse;
 import com.swig.zigzzang.global.response.HttpResponse;
 import java.util.stream.Collectors;
