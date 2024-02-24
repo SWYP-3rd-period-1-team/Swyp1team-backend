@@ -7,6 +7,7 @@ import com.swig.zigzzang.global.redis.RedisService;
 import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.exception.MemberExistException;
+import com.swig.zigzzang.member.exception.NickNameAlreadyExistException;
 import com.swig.zigzzang.member.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
@@ -39,6 +40,10 @@ public class MemberService {
         Member member = memberJoinRequest.toEntity();
 
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+        memberRepository.findByUserId(member.getUserId())
+                .orElseThrow(MemberExistException::new);
+        memberRepository.findByNickname(member.getNickname())
+                .orElseThrow(NickNameAlreadyExistException::new);
 
         Member savedmember = memberRepository.save(member);
 

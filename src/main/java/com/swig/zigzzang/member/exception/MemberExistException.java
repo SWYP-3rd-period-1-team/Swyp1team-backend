@@ -16,4 +16,8 @@ public class MemberExistException extends RuntimeException{
         super(exceptionCode.getMessage());
         this.httpStatus = exceptionCode.getHttpStatus();
     }
+
+    public MemberExistException() {
+        this(HttpExceptionCode.MEMBER_EXISTS);
+    }
 }
