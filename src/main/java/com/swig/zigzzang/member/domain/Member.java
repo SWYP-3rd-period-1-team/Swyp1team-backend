@@ -1,7 +1,6 @@
 package com.swig.zigzzang.member.domain;
 
 
-import com.swig.zigzzang.hospital.domain.HospitalReview;
 import com.swig.zigzzang.survey.domain.Survey;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,9 +43,6 @@ public class Member {
 
     @Column
     private String email;
-
-    @OneToMany(mappedBy = "member")
-    private Set<HospitalReview> hospitalReview = new HashSet<>();
 
     @OneToMany(mappedBy = "member")
     private List<Survey> surveys;
