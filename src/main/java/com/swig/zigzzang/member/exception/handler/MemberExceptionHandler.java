@@ -25,7 +25,6 @@ public class MemberExceptionHandler {
         return ResponseEntity.status(e.getHttpStatus())
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }
-    // New handler for NickNameAlreadyExistException
     @ExceptionHandler(NickNameAlreadyExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ErrorResponse> nickNameAlreadyExistExceptionHandler(NickNameAlreadyExistException e) {
@@ -38,7 +37,7 @@ public class MemberExceptionHandler {
         return ResponseEntity.status(e.getHttpStatus())
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }
-    @ExceptionHandler(MemberNotFoundException.class) // 새로운 예외에 대한 핸들러 추가
+    @ExceptionHandler(MemberNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> memberNotFoundExceptionHandler(MemberNotFoundException e) {
         return ResponseEntity.status(e.getHttpStatus())
