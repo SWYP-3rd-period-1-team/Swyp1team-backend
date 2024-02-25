@@ -1,5 +1,6 @@
 package com.swig.zigzzang.global.security;
 
+import com.swig.zigzzang.global.redis.RedisService;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
@@ -17,7 +18,8 @@ public class JWTUtil {
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String REFRESH_HEADER = "RefreshToken";
     public static final String BEARER_PREFIX = "Bearer ";
-
+    @Autowired
+    private RedisService redisService;
 
     private SecretKey secretKey;
 
@@ -62,6 +64,8 @@ public class JWTUtil {
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
                 .signWith(secretKey)
                 .compact();
+        // redis에 RT저장
+        redisService.setValues(refreshToken,userid);
 
 
         return refreshToken;

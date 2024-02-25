@@ -52,6 +52,11 @@ dependencies {
 
 	//@notnull Validate 기능 활성화
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	//SMTP
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	// thymeleaf를
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
 	//jwt 의존성 추가
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
@@ -60,6 +65,10 @@ dependencies {
 
 	// p6spy 로깅 설정
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
+  
+	//redis
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
 }
 
 tasks.named('test') {

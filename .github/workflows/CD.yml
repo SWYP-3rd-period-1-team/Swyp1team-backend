@@ -36,6 +36,10 @@ jobs:
           spring.datasource.password: ${{ secrets.DB_PASSWORD }}
           spring.datasource.driver-class-name: ${{ secrets.DB_DRIVER }}
           spring.jwt.secret: ${{ secrets.JWT_SECRET }}
+          spring.mail.username: ${{secrets.MAIL_USERNAME}}
+          spring.mail.password: ${{secrets.MAIL_PASSWORD}}
+          spring.data.redis.host: ${{secrets.REDIS_HOST}}
+          spring.data.redis.port: ${{secrets.REDIS_PORT}}
 
 
       #gradlew 실행을 위한 권한 추가
@@ -93,15 +97,7 @@ jobs:
             sudo docker rm zigzzang
             sudo docker pull ulsandonghun/zigzzang
             
-            
-            sudo docker run -it -p 8080:8080 \
-            --name zigzzang \
-            -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
-            -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} \
-            -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} \
-            -e SPRING_DATASOURCE_DRIVER=${{ secrets.DB_DRIVER }} \
-            -e SPRING_JWT_SECRET=${{ secrets.JWT_SECRET }} \
-            -d ulsandonghun/zigzzang
+            sudo docker run -it -p 8080:8080 --name zigzzang -d ulsandonghun/zigzzang
             
             docker rmi -f $(docker images -f "dangling=true" -q)
 

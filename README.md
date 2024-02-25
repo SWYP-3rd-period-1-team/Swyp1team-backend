@@ -2,6 +2,13 @@
 ###   [feature branch workflow](https://gmlwjd9405.github.io/2017/10/27/how-to-collaborate-on-GitHub-1.html)에 따라 개발을 진행합니다
 
 ![image](https://github.com/SWYP-3rd-period-1-team/Swyp1team-backend/assets/58305106/8b37e47a-943b-4cd3-b628-58224d1fcf1a)
+
+
+
+## ⚙️ 직짱건강 프로젝트는 이렇게 배포돼요!
+
+![image](https://github.com/SWYP-3rd-period-1-team/zigzzang-backend/assets/58305106/280aeb89-089c-4a8d-9b85-a44d1f977e2c)
+
 1. git clone 명령으로 중앙 원격 저장소를 복제해 자신의 로컬 저장소를 만듭니다
 
    `git clone [중앙 remote repository URL]`
