@@ -139,7 +139,7 @@ public class MemberService {
         String blacklistKey = encryptedRefreshToken;
 
 
-        redisService.setValues(blacklistKey, "blacklist");
+        redisService.setValues(blacklistKey, "blacklist",Duration.ofMillis(60*60*100L));
         return "blaklist " + blacklistKey;
     }
     private void isTokenPresent(String encryptedRefreshToken) {
