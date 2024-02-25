@@ -5,6 +5,8 @@ import com.swig.zigzzang.global.response.HttpResponse;
 import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.dto.MemberJoinResponse;
+import com.swig.zigzzang.member.dto.TokenRefreshRequest;
+import com.swig.zigzzang.member.dto.TokenRefreshResponse;
 import com.swig.zigzzang.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -31,6 +33,14 @@ public class MemberController {
         Member savedmember = memberService.save(memberJoinRequest);
         return HttpResponse.okBuild(
                 MemberJoinResponse.of(savedmember)
+        );
+    }
+    @PostMapping("/refresh")
+    @Operation(summary = "토큰 갱신", description = "만료된 AccessToken을 RefreshToken을 사용해 갱신합니다.")
+    public HttpResponse<TokenRefreshResponse> refreshToken(@RequestBody TokenRefreshRequest refreshRequest) {
+        String newAccessToken = memberService.refreshToken(refreshRequest.refreshToken());
+        return HttpResponse.okBuild(
+                TokenRefreshResponse.of(newAccessToken)
         );
     }
 

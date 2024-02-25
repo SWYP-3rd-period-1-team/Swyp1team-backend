@@ -3,6 +3,7 @@ package com.swig.zigzzang.member.exception.handler;
 import com.swig.zigzzang.global.response.ErrorResponse;
 import com.swig.zigzzang.global.response.HttpResponse;
 import com.swig.zigzzang.member.exception.MemberExistException;
+import com.swig.zigzzang.member.exception.MemberNotFoundException;
 import com.swig.zigzzang.member.exception.NickNameAlreadyExistException;
 import com.swig.zigzzang.member.exception.UserIdAlreadyExistException;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,12 @@ public class MemberExceptionHandler {
     @ExceptionHandler(UserIdAlreadyExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ErrorResponse> userIdAlreadyExistExceptionHandler(UserIdAlreadyExistException e) {
+        return ResponseEntity.status(e.getHttpStatus())
+                .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
+    }
+    @ExceptionHandler(MemberNotFoundException.class) // 새로운 예외에 대한 핸들러 추가
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponse> memberNotFoundExceptionHandler(MemberNotFoundException e) {
         return ResponseEntity.status(e.getHttpStatus())
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }
