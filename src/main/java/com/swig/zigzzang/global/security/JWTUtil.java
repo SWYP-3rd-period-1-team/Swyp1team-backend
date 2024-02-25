@@ -4,6 +4,7 @@ import com.swig.zigzzang.global.redis.RedisService;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.Date;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -65,7 +66,7 @@ public class JWTUtil {
                 .signWith(secretKey)
                 .compact();
         // redis에 RT저장
-        redisService.setValues(refreshToken,userid);
+        redisService.setValues(refreshToken,userid, Duration.ofMillis(expiredMs));
 
 
         return refreshToken;

@@ -3,10 +3,14 @@ package com.swig.zigzzang.member.service;
 import com.swig.zigzzang.email.dto.EmailResponseDto;
 import com.swig.zigzzang.email.service.EmailService;
 import com.swig.zigzzang.global.exception.HttpExceptionCode;
+import com.swig.zigzzang.global.exception.custom.security.IncorrectRefreshTokenException;
+import com.swig.zigzzang.global.exception.custom.security.SecurityJwtNotFoundException;
 import com.swig.zigzzang.global.redis.RedisService;
+import com.swig.zigzzang.global.security.JWTUtil;
 import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.exception.MemberExistException;
+import com.swig.zigzzang.member.exception.MemberNotFoundException;
 import com.swig.zigzzang.member.exception.NickNameAlreadyExistException;
 import com.swig.zigzzang.member.exception.UserIdAlreadyExistException;
 import com.swig.zigzzang.member.repository.MemberRepository;
@@ -34,6 +38,8 @@ public class MemberService {
     private static final String AUTH_CODE_PREFIX = "AuthCode ";
     private final EmailService mailService;
     private final RedisService redisService;
+    private final JWTUtil jwtUtil;
+
 
 
 
@@ -93,5 +99,58 @@ public class MemberService {
 
         return authResult;
     }
+    public String refreshToken(String encryptedRefreshToken) {
+        isTokenPresent(encryptedRefreshToken);
+        //앞의 Bearer 삭제후 순수 RT 추출
+        String pureRefreshToken = getBearerSubstring(encryptedRefreshToken);
+        //redis에서 해당 키 검색해서 해당 토큰에 대응하는 key 추출
+        String userId = redisService.getValues(pureRefreshToken);
+        System.out.println("userId="+userId);
+        //RT가 redis에 저장된 값이랑 일치하는지 확인
+        if (!redisService.checkExistsValue(userId)) {
+            throw new IncorrectRefreshTokenException();
+        }
 
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(MemberNotFoundException::new);
+
+        //jwt AT 생성
+        String newAccessToken = getAccessToken(member);
+
+        return "Bearer " + newAccessToken;
+    }
+
+
+    public String logout(String encryptedRefreshToken) {
+        isTokenPresent(encryptedRefreshToken);
+        //RT가 레디스에 저장된값이랑 일치하는지 확인
+        String userId = redisService.getValues(encryptedRefreshToken);
+        if (!redisService.checkExistsValue(userId)) {
+            throw new IncorrectRefreshTokenException();
+        }
+        //RT 를 레디스에서 삭제
+        redisService.deleteValues(encryptedRefreshToken);
+
+        String result = addToBlacklist(encryptedRefreshToken);
+        return result;
+
+    }
+    private String addToBlacklist(String encryptedRefreshToken) {
+        String blacklistKey = encryptedRefreshToken;
+
+
+        redisService.setValues(blacklistKey, "blacklist",Duration.ofMillis(60*60*100L));
+        return "blaklist " + blacklistKey;
+    }
+    private void isTokenPresent(String encryptedRefreshToken) {
+        if (encryptedRefreshToken == null) {
+            throw new SecurityJwtNotFoundException(HttpExceptionCode.JWT_NOT_FOUND);
+        }
+    }
+    private static String getBearerSubstring(String encryptedRefreshToken) {
+        return encryptedRefreshToken.substring(7);
+    }
+    private String getAccessToken( Member user) {
+        return jwtUtil.createJwt(user.getUserId(), user.getPassword(), 86400000 * 7L);
+    }
 }
