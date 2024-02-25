@@ -7,18 +7,19 @@ spring:
     hikari:
       maximum-pool-size: 20
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        show_sql: true
-        format_sql: true
-    database: mysql
-    show-sql: true
     hibernate:
       ddl-auto: create
     defer-datasource-initialization: true
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1000
   jwt:
     secret: ${jwt_secret}
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
 
   mail:
     host: smtp.gmail.com
@@ -41,9 +42,5 @@ spring:
       host: ${redis_host}
       port: ${redis_port}
 
-
-logging:
-  level:
-    org.hibernate.SQL: debug
 
 
