@@ -1,7 +1,7 @@
 package com.swig.zigzzang.global.security;
 
 import com.swig.zigzzang.global.exception.HttpExceptionCode;
-import com.swig.zigzzang.global.exception.custom.security.TokenExpiredException;
+import com.swig.zigzzang.global.exception.custom.security.BearerNotFoundException;
 import com.swig.zigzzang.global.redis.RedisService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -33,25 +33,28 @@ public class JWTUtil {
 
     private SecretKey secretKey;
 
-    public JWTUtil(@Value("${spring.jwt.secret}")String secret) {
+    public JWTUtil(@Value("${spring.jwt.secret}") String secret) {
 
-
-        secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
+        secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8),
+                Jwts.SIG.HS256.key().build().getAlgorithm());
     }
 
     public String getUserId(String token) {
 
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("userid", String.class);
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload()
+                .get("userid", String.class);
     }
 
     public String getPassword(String token) {
 
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("password", String.class);
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload()
+                .get("password", String.class);
     }
 
     public Boolean isExpired(String token) {
 
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration()
+                .before(new Date());
     }
 
     public String createJwt(String userid, String password, Long expiredMs) {
@@ -64,8 +67,8 @@ public class JWTUtil {
                 .signWith(secretKey)
                 .compact();
     }
-    public String createRefreshToken(String userid, String password, Long expiredMs) {
 
+    public String createRefreshToken(String userid, String password, Long expiredMs) {
 
         String refreshToken = Jwts.builder()
                 .claim("userid", userid)
@@ -75,11 +78,11 @@ public class JWTUtil {
                 .signWith(secretKey)
                 .compact();
         // redis에 RT저장
-        redisService.setValues(refreshToken,userid, Duration.ofMillis(expiredMs));
-
+        redisService.setValues(refreshToken, userid, Duration.ofMillis(expiredMs));
 
         return refreshToken;
     }
+
     // Request Header에 Access Token 정보를 추출하는 메서드
     public String getAccessToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
@@ -97,10 +100,13 @@ public class JWTUtil {
         }
         return null;
     }
+
     public boolean validateToken(HttpServletRequest request) {
         try {
             String token = extractHeader(request);
             Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token);
+        } catch (BearerNotFoundException e) {//토큰이 bearer로 시작되지 않는경우
+            throw new JwtException(HttpExceptionCode.BEARER_NOT_FOUND.getMessage());
         } catch (ExpiredJwtException e) {
             throw new JwtException(HttpExceptionCode.EXPIRED_TOKEN.getMessage());
         } catch (ArrayIndexOutOfBoundsException e) {//토큰이 존재하지 않을 경우
@@ -109,16 +115,17 @@ public class JWTUtil {
             throw new JwtException(HttpExceptionCode.WRONG_TYPE_TOKEN.getMessage());
         } catch (MalformedJwtException e) { //토큰 길이나 형식이 다른 경우
             throw new JwtException(HttpExceptionCode.UNSUPPORTED_TOKEN.getMessage());
-        } catch (NullPointerException e) {
-            throw new JwtException(HttpExceptionCode.HEADER_NOT_FOUND.getMessage());
         }
 
-
-          return true;
+        return true;
 
     }
+
     public static String extractHeader(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
+        if (!authorization.startsWith("Bearer ")) {
+            throw new BearerNotFoundException();
+        }
         String token = authorization.split(" ")[1];
         return token;
     }

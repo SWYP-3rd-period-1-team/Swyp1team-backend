@@ -28,6 +28,17 @@ public class JWTFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        String authorization = request.getHeader("Authorization");
+
+        //Authorization 이 없어도 접근 가능한 api일 경우 통과
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+
+            System.out.println("token null");
+            filterChain.doFilter(request, response);
+
+
+            return;
+        }
 
         try {
             jwtUtil.validateToken(request);
@@ -44,9 +55,6 @@ public class JWTFilter extends OncePerRequestFilter {
             }
             if (HttpExceptionCode.UNSUPPORTED_TOKEN.getMessage().equals(message)) {
                 setResponse(response,HttpExceptionCode.UNSUPPORTED_TOKEN);
-            }
-            if (HttpExceptionCode.HEADER_NOT_FOUND.getMessage().equals(message)) {
-                setResponse(response,HttpExceptionCode.HEADER_NOT_FOUND);
             }
             return;
         }

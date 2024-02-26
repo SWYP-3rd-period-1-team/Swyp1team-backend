@@ -9,14 +9,14 @@ import org.springframework.http.HttpStatus;
 @Getter
 @Setter
 @Slf4j
-public class TokenExpiredException extends RuntimeException{
+public class BearerNotFoundException extends RuntimeException{
     private final HttpStatus httpStatus;
-    public TokenExpiredException(HttpExceptionCode exceptionCode) {
+    public BearerNotFoundException(HttpExceptionCode exceptionCode) {
         super(exceptionCode.getMessage());
         this.httpStatus=exceptionCode.getHttpStatus();
     }
 
 
-    public TokenExpiredException(){
-        this(HttpExceptionCode.EXPIRED_TOKEN);}
+    public BearerNotFoundException(){
+        this(HttpExceptionCode.BEARER_NOT_FOUND);}
 }
