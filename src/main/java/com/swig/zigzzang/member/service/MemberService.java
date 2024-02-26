@@ -9,6 +9,7 @@ import com.swig.zigzzang.global.redis.RedisService;
 import com.swig.zigzzang.global.security.JWTUtil;
 import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
+import com.swig.zigzzang.member.exception.EmailCodeFailedException;
 import com.swig.zigzzang.member.exception.MemberExistException;
 import com.swig.zigzzang.member.exception.MemberNotFoundException;
 import com.swig.zigzzang.member.exception.NickNameAlreadyExistException;
@@ -96,6 +97,9 @@ public class MemberService {
         String redisAuthCode = redisService.getValues(AUTH_CODE_PREFIX + email);
         //현재 redis 저장값과 비교(redis 저장코드는 이메일 송신시마다 overwrite)
         boolean authResult = redisService.checkExistsValue(redisAuthCode) && redisAuthCode.equals(authCode);
+        if (!authResult) {
+            throw new EmailCodeFailedException();
+        }
 
         return authResult;
     }

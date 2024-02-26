@@ -38,4 +38,5 @@ public class SecurityExceptionHandler {
         return HttpResponse.status(e.getHttpStatus())
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }
+
 }
