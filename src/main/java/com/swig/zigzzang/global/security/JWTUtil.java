@@ -109,6 +109,8 @@ public class JWTUtil {
             throw new JwtException(HttpExceptionCode.WRONG_TYPE_TOKEN.getMessage());
         } catch (MalformedJwtException e) { //토큰 길이나 형식이 다른 경우
             throw new JwtException(HttpExceptionCode.UNSUPPORTED_TOKEN.getMessage());
+        } catch (NullPointerException e) {
+            throw new JwtException(HttpExceptionCode.HEADER_NOT_FOUND.getMessage());
         }
 
 

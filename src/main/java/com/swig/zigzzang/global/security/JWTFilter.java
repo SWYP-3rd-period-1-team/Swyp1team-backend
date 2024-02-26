@@ -45,6 +45,9 @@ public class JWTFilter extends OncePerRequestFilter {
             if (HttpExceptionCode.UNSUPPORTED_TOKEN.getMessage().equals(message)) {
                 setResponse(response,HttpExceptionCode.UNSUPPORTED_TOKEN);
             }
+            if (HttpExceptionCode.HEADER_NOT_FOUND.getMessage().equals(message)) {
+                setResponse(response,HttpExceptionCode.HEADER_NOT_FOUND);
+            }
             return;
         }
 

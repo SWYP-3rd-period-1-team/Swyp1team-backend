@@ -19,7 +19,9 @@ public enum HttpExceptionCode {
     EXPIRED_TOKEN(HttpStatus.BAD_REQUEST,"만료된 토큰입니다. 토큰을 재발급하세요"),
     WRONG_TYPE_TOKEN(HttpStatus.UNAUTHORIZED,"토큰의 정보가 임의로 변경되었습니다."),
     UNKNOWN_TOKEN(HttpStatus.UNAUTHORIZED,"인증 토큰이 존재하지 않습니다."),
-    UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED,"토큰의 길이나 형식이 올바르지 않습니다.");
+    UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED,"토큰의 길이나 형식이 올바르지 않습니다."),
+    HEADER_NOT_FOUND(HttpStatus.UNAUTHORIZED,"Authorization 헤더 정보가 존재하지 않습니다.");
+
 
 
 
