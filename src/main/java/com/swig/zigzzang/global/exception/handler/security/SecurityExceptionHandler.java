@@ -4,6 +4,7 @@ package com.swig.zigzzang.global.exception.handler.security;
 import com.swig.zigzzang.global.exception.custom.security.IncorrectRefreshTokenException;
 import com.swig.zigzzang.global.exception.custom.security.RefreshTokenNotFoundException;
 import com.swig.zigzzang.global.exception.custom.security.SecurityJwtNotFoundException;
+import com.swig.zigzzang.global.exception.custom.security.TokenExpiredException;
 import com.swig.zigzzang.global.response.ErrorResponse;
 import com.swig.zigzzang.global.response.HttpResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,12 @@ public class SecurityExceptionHandler {
     @ExceptionHandler(IncorrectRefreshTokenException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public HttpResponse<ErrorResponse> incorrectRefreshTokenExceptionHandler(IncorrectRefreshTokenException e) {
+        return HttpResponse.status(e.getHttpStatus())
+                .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
+    }
+    @ExceptionHandler(TokenExpiredException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public HttpResponse<ErrorResponse> TokenExpiredExceptionHandler(TokenExpiredException e) {
         return HttpResponse.status(e.getHttpStatus())
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }

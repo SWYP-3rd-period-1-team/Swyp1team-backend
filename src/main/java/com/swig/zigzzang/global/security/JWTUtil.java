@@ -1,7 +1,15 @@
 package com.swig.zigzzang.global.security;
 
+import com.swig.zigzzang.global.exception.HttpExceptionCode;
+import com.swig.zigzzang.global.exception.custom.security.TokenExpiredException;
 import com.swig.zigzzang.global.redis.RedisService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -87,5 +95,15 @@ public class JWTUtil {
             return bearerToken.substring(7);
         }
         return null;
+    }
+    public boolean validateToken(String token) {
+        try {
+
+            Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token);
+        } catch (ExpiredJwtException e) {
+            throw new JwtException(HttpExceptionCode.EXPIRED_TOKEN.getMessage());
+        }
+          return true;
+
     }
 }

@@ -1,11 +1,16 @@
 package com.swig.zigzzang.global.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.swig.zigzzang.global.exception.HttpExceptionCode;
 import com.swig.zigzzang.member.domain.Member;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import org.springdoc.api.ErrorMessage;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,10 +29,9 @@ public class JWTFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String authorization= request.getHeader("Authorization");
+        String authorization = request.getHeader("Authorization");
 
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-            System.out.println("token null");
             filterChain.doFilter(request, response);
             return;
 
@@ -35,14 +39,12 @@ public class JWTFilter extends OncePerRequestFilter {
 
         System.out.println("authorization now");
         String token = authorization.split(" ")[1];
-
-        if (jwtUtil.isExpired(token)) {
-
-            System.out.println("token expired");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("AccessToken 기간만료");
-            filterChain.doFilter(request, response);
-
+        try {
+            jwtUtil.validateToken(token);
+        } catch (JwtException e) {
+            String message = e.getMessage();
+            if(HttpExceptionCode.EXPIRED_TOKEN.getMessage().equals(message))
+            setResponse(response,HttpExceptionCode.EXPIRED_TOKEN);
             return;
         }
 
@@ -56,9 +58,15 @@ public class JWTFilter extends OncePerRequestFilter {
                 .build();
         CustomUserDetails customUserDetails = new CustomUserDetails(member);
 
-        Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+        Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null,
+                customUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         filterChain.doFilter(request, response);
+    }
+    private void setResponse(HttpServletResponse response, HttpExceptionCode errorMessage) throws RuntimeException, IOException {
+        response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(errorMessage.getHttpStatus().value());
+        response.getWriter().print(errorMessage.getMessage());
     }
 }
