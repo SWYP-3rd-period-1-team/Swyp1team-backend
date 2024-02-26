@@ -39,6 +39,12 @@ public class JWTFilter extends OncePerRequestFilter {
             if (HttpExceptionCode.JWT_NOT_FOUND.getMessage().equals(message)) {
                 setResponse(response,HttpExceptionCode.JWT_NOT_FOUND);
             }
+            if (HttpExceptionCode.WRONG_TYPE_TOKEN.getMessage().equals(message)) {
+                setResponse(response, HttpExceptionCode.WRONG_TYPE_TOKEN);
+            }
+            if (HttpExceptionCode.UNSUPPORTED_TOKEN.getMessage().equals(message)) {
+                setResponse(response,HttpExceptionCode.UNSUPPORTED_TOKEN);
+            }
             return;
         }
 
