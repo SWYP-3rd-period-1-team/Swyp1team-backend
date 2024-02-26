@@ -96,14 +96,21 @@ public class JWTUtil {
         }
         return null;
     }
-    public boolean validateToken(String token) {
+    public boolean validateToken(HttpServletRequest request) {
         try {
-
+            String token = extractHeader(request);
             Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token);
         } catch (ExpiredJwtException e) {
             throw new JwtException(HttpExceptionCode.EXPIRED_TOKEN.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new JwtException(HttpExceptionCode.JWT_NOT_FOUND.getMessage());
         }
           return true;
 
+    }
+    public static String extractHeader(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        String token = authorization.split(" ")[1];
+        return token;
     }
 }

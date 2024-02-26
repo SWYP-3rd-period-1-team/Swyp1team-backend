@@ -29,24 +29,23 @@ public class JWTFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String authorization = request.getHeader("Authorization");
-
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
+        try {
+            jwtUtil.validateToken(request);
+        } catch (JwtException e) {
+            String message = e.getMessage();
+            if(HttpExceptionCode.EXPIRED_TOKEN.getMessage().equals(message)) {
+                setResponse(response, HttpExceptionCode.EXPIRED_TOKEN);
+            }
+            if (HttpExceptionCode.JWT_NOT_FOUND.getMessage().equals(message)) {
+                setResponse(response,HttpExceptionCode.JWT_NOT_FOUND);
+            }
             return;
-
         }
 
         System.out.println("authorization now");
-        String token = authorization.split(" ")[1];
-        try {
-            jwtUtil.validateToken(token);
-        } catch (JwtException e) {
-            String message = e.getMessage();
-            if(HttpExceptionCode.EXPIRED_TOKEN.getMessage().equals(message))
-            setResponse(response,HttpExceptionCode.EXPIRED_TOKEN);
-            return;
-        }
+
+        String token = JWTUtil.extractHeader(request);
+
 
         String username = jwtUtil.getUserId(token);
         String password = jwtUtil.getPassword(token);
