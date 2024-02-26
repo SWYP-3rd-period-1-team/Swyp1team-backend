@@ -31,7 +31,7 @@ public class JWTFilter extends OncePerRequestFilter {
         String authorization = request.getHeader("Authorization");
 
         //Authorization 이 없어도 접근 가능한 api일 경우 통과
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
+        if (authorization == null) {
 
             System.out.println("token null");
             filterChain.doFilter(request, response);
@@ -56,6 +56,7 @@ public class JWTFilter extends OncePerRequestFilter {
             if (HttpExceptionCode.UNSUPPORTED_TOKEN.getMessage().equals(message)) {
                 setResponse(response,HttpExceptionCode.UNSUPPORTED_TOKEN);
             }
+
             return;
         }
 

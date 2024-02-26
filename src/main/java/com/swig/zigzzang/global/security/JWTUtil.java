@@ -105,8 +105,6 @@ public class JWTUtil {
         try {
             String token = extractHeader(request);
             Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token);
-        } catch (BearerNotFoundException e) {//토큰이 bearer로 시작되지 않는경우
-            throw new JwtException(HttpExceptionCode.BEARER_NOT_FOUND.getMessage());
         } catch (ExpiredJwtException e) {
             throw new JwtException(HttpExceptionCode.EXPIRED_TOKEN.getMessage());
         } catch (ArrayIndexOutOfBoundsException e) {//토큰이 존재하지 않을 경우
@@ -123,9 +121,6 @@ public class JWTUtil {
 
     public static String extractHeader(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
-        if (!authorization.startsWith("Bearer ")) {
-            throw new BearerNotFoundException();
-        }
         String token = authorization.split(" ")[1];
         return token;
     }

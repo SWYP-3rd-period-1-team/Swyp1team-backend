@@ -21,7 +21,9 @@ public enum HttpExceptionCode {
     UNKNOWN_TOKEN(HttpStatus.UNAUTHORIZED,"인증 토큰이 존재하지 않습니다."),
     UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED,"토큰의 길이나 형식이 올바르지 않습니다."),
     HEADER_NOT_FOUND(HttpStatus.UNAUTHORIZED,"Authorization 헤더 정보가 존재하지 않습니다."),
-    BEARER_NOT_FOUND(HttpStatus.UNAUTHORIZED,"Bearer 로 Authorization 헤더가 시작되지 않습니다.");
+    BEARER_NOT_FOUND(HttpStatus.UNAUTHORIZED,"Bearer 로 Authorization 헤더가 시작되지 않습니다."),
+    EMAIL_FAILED(HttpStatus.UNAUTHORIZED,"이메일 코드가 올바르지 않습니다.");
+
 
 
 
