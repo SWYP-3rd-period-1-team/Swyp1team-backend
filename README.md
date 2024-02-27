@@ -1,13 +1,41 @@
-# [직짱건강] Back-END
-###   [feature branch workflow](https://gmlwjd9405.github.io/2017/10/27/how-to-collaborate-on-GitHub-1.html)에 따라 개발을 진행합니다
+## 🌱직짱건강을 소개합니다 ! 🏥
 
-![image](https://github.com/SWYP-3rd-period-1-team/Swyp1team-backend/assets/58305106/8b37e47a-943b-4cd3-b628-58224d1fcf1a)
+<p align="center">
+    <img src="https://github.com/SWYP-3rd-period-1-team/Swyp1team-backend/assets/58305106/8b37e47a-943b-4cd3-b628-58224d1fcf1a" alt="pick-git-logo" width="320" height="320">
+</p>
+
+<div align="center">
+
+  💻 나에게 건강을 맞겨줘 ! 종합 건강관리 플랫폼, <br>
+  🖋 [직짱건강]()
+
+</div>
+<br/>
+
+
+## 🧑🏻‍💻 기술 스택
+### BE
+<img src="https://img.shields.io/badge/Java 17-007396?style=flat&logo=java&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=spring&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring MVC-6DB33F?style=flat&logo=spring&logoColor=white"/>  <img src="https://img.shields.io/badge/Spring Data JPA-6DB33F?style=flat&logo=spring&logoColor=white"/> <img src="https://img.shields.io/badge/JPA-orange?style=flat&logo=JPA&logoColor=white"/> <img src="https://img.shields.io/badge/Hibernate-orange?style=flat&logo=Hibernate&logoColor=white"/> <img src="https://img.shields.io/badge/Querydsl-orange?style=flat&logo=querydsl&logoColor=white"/> <img src="https://img.shields.io/badge/Junit5-blue?style=flat&logo=Junit5&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white"/> 
+
+<img src="https://img.shields.io/badge/EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/RDS-527FFF?style=flat&logo=amazonrds&logoColor=white"/> <img src="https://img.shields.io/badge/ELB-FF9900?style=flat&logo=amazon elb&logoColor=white"/> <img src="https://img.shields.io/badge/Api Gateway-FF9900?style=flat&logo=amazonapigateway&logoColor=white"/> 
+
+<img src="https://img.shields.io/badge/GithubActions-2088FF?style=flat&logo=githubactions&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/redis-DC382D?style=flat&logo=redis&logoColor=white"/>
+
+## 💻 개발자
+- Back-end : [최동훈](https://github.com/ulsandonghun), [최지웅](https://github.com/wooni423)
 
 
 
 ## ⚙️ 직짱건강 프로젝트는 이렇게 배포돼요!
 
-![image](https://github.com/SWYP-3rd-period-1-team/zigzzang-backend/assets/58305106/280aeb89-089c-4a8d-9b85-a44d1f977e2c)
+
+<img src="https://github.com/SWYP-3rd-period-1-team/zigzzang-backend/assets/58305106/280aeb89-089c-4a8d-9b85-a44d1f977e2c" alt="pick-git-logo" width="80%" style="height: auto;">
+
+###   [feature branch workflow](https://gmlwjd9405.github.io/2017/10/27/how-to-collaborate-on-GitHub-1.html)에 따라 개발을 진행합니다
 
 1. git clone 명령으로 중앙 원격 저장소를 복제해 자신의 로컬 저장소를 만듭니다
 
@@ -33,6 +61,7 @@
 
 *주의*
 Default 브랜치는 dev 입니다 ! 
+
 
 ###  저희는 다음과 같은 commit convention에 따라 개발을 진행합니다
 
