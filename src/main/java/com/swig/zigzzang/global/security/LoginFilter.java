@@ -1,11 +1,14 @@
 package com.swig.zigzzang.global.security;
 
+import com.swig.zigzzang.global.exception.HttpExceptionCode;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -64,9 +67,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) {
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed)
+            throws IOException {
 
-        response.setStatus(401);
+        setResponse(response, 406,"아이디나 비밀번호가 일치하지 않습니다.");
     }
     public Cookie createCookie(String refreshToken) throws UnsupportedEncodingException {
         String cookieName = "refreshtoken";
@@ -79,5 +83,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         cookie.setMaxAge(60 * 60 * 24 * 7);
 
         return cookie;
+    }
+    private void setResponse(HttpServletResponse response,int status, String message) throws RuntimeException, IOException {
+        response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(status);
+        response.getWriter().print(message);
     }
 }

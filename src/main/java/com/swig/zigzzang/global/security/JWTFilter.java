@@ -33,7 +33,6 @@ public class JWTFilter extends OncePerRequestFilter {
         //Authorization 이 없어도 접근 가능한 api일 경우 통과
         if (authorization == null) {
 
-            System.out.println("token null");
             filterChain.doFilter(request, response);
 
 
