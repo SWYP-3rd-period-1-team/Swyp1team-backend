@@ -83,14 +83,7 @@ public class JWTUtil {
         return refreshToken;
     }
 
-    // Request Header에 Access Token 정보를 추출하는 메서드
-    public String getAccessToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
-            return bearerToken.substring(7);
-        }
-        return null;
-    }
+
 
     // Request Header에 Refresh Token 정보를 추출하는 메서드
     public String getRefreshToken(HttpServletRequest request) {
