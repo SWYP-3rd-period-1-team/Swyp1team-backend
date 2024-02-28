@@ -41,4 +41,10 @@ public class Survey extends BaseEntity {
     @Column
     private String presentedSymptom;
 
+    @Column
+    private String  department;
+
+    @Column
+    private String  disease;
+
 }

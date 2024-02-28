@@ -45,6 +45,9 @@ public class Member extends BaseEntity {
     @Column
     private String email;
 
+    @Column
+    private String profileimage;
+
     @OneToMany(mappedBy = "member")
     private List<Survey> surveys;
 }
