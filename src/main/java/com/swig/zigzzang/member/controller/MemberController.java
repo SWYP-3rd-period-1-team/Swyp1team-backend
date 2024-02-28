@@ -4,6 +4,8 @@ import com.swig.zigzzang.email.dto.EmailResponseDto;
 import com.swig.zigzzang.global.response.HttpResponse;
 import com.swig.zigzzang.global.security.JWTUtil;
 import com.swig.zigzzang.member.domain.Member;
+import com.swig.zigzzang.member.dto.FindIdRequest;
+import com.swig.zigzzang.member.dto.FindIdResponse;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.dto.MemberJoinResponse;
 import com.swig.zigzzang.member.dto.MemberLogoutResponse;
@@ -61,6 +63,15 @@ public class MemberController {
 
         return HttpResponse.okBuild(
                 MemberLogoutResponse.from(username,blacklist)
+        );
+    }
+
+    @PostMapping("/find-id")
+    @Operation(summary = "아이디 찾기", description = "이메일을 통해 사용자 아이디를 찾습니다.")
+    public HttpResponse<FindIdResponse> findId(@Valid @RequestBody FindIdRequest findIdRequest) {
+        String foundId = memberService.findIdByEmail(findIdRequest.email());
+        return HttpResponse.okBuild(
+                FindIdResponse.of(foundId)
         );
     }
 

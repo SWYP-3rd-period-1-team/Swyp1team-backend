@@ -157,4 +157,10 @@ public class MemberService {
     private String getAccessToken( Member user) {
         return jwtUtil.createJwt(user.getUserId(), user.getPassword(), 86400000 * 7L);
     }
+
+    public String findIdByEmail(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(MemberNotFoundException::new);
+        return member.getUserId();
+    }
 }
