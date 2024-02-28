@@ -7,6 +7,7 @@ import com.swig.zigzzang.member.repository.MemberRepository;
 import com.swig.zigzzang.survey.domain.Survey;
 import com.swig.zigzzang.survey.repository.SurveyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +17,9 @@ public class SurveyService {
     private final SurveyRepository surveyRepository;
 
     public Survey saveSurveyResult(SurveySaveRequest surveyrequest) {
-        Member member = memberRepository.findByUserId(surveyrequest.userId())
+        String userid= SecurityContextHolder.getContext().getAuthentication()
+                .getName();
+        Member member = memberRepository.findByUserId(userid)
                 .orElseThrow(MemberNotFoundException::new);
 
         Survey result = surveyrequest.toEntity(member);

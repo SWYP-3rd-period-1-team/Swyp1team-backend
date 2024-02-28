@@ -22,7 +22,9 @@ public enum HttpExceptionCode {
     UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED,"토큰의 길이나 형식이 올바르지 않습니다."),
     HEADER_NOT_FOUND(HttpStatus.UNAUTHORIZED,"Authorization 헤더 정보가 존재하지 않습니다."),
     BEARER_NOT_FOUND(HttpStatus.UNAUTHORIZED,"Bearer 로 Authorization 헤더가 시작되지 않습니다."),
-    EMAIL_FAILED(HttpStatus.UNAUTHORIZED,"이메일 코드가 올바르지 않습니다.");
+    EMAIL_FAILED(HttpStatus.UNAUTHORIZED,"이메일 인증 코드가 올바르지 않습니다."),
+    EMAIL_USER_NOTFOUND(HttpStatus.NOT_FOUND, "해당하는 이메일의 사용자가 존재하지 않습니다."),
+    EMAIL_USERID_USER_NOT(HttpStatus.NOT_FOUND, "해당하는 이메일, 아이디에 일치하는 사용자를 찾을수 없습니다.");
 
 
 

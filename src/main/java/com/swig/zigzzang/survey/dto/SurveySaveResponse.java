@@ -12,6 +12,8 @@ public record SurveySaveResponse(
         String targetBodyPart,
         String diagnosisPart,
         String presentedSymptom,
+        String disease,
+        String department,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
         LocalDateTime savedAt
 ) {
@@ -22,6 +24,8 @@ public record SurveySaveResponse(
                 .diagnosisPart(survey.getDiagnosisPart())
                 .presentedSymptom(survey.getPresentedSymptom())
                 .targetBodyPart(survey.getTargetBody())
+                .disease(survey.getDisease())
+                .department(survey.getDepartment())
                 .savedAt(survey.createdDate)
                 .build();
     }
