@@ -6,6 +6,8 @@ import com.swig.zigzzang.global.security.JWTUtil;
 import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.dto.FindIdRequest;
 import com.swig.zigzzang.member.dto.FindIdResponse;
+import com.swig.zigzzang.member.dto.FindPasswordRequest;
+import com.swig.zigzzang.member.dto.FindPasswordResponse;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.dto.MemberJoinResponse;
 import com.swig.zigzzang.member.dto.MemberLogoutResponse;
@@ -72,6 +74,15 @@ public class MemberController {
         String foundId = memberService.findIdByEmail(findIdRequest.email());
         return HttpResponse.okBuild(
                 FindIdResponse.of(foundId)
+        );
+    }
+
+    @PostMapping("/find-password")
+    @Operation(summary = "비밀번호 찾기", description = "아이디와 이메일로 임시 비밀번호를 발급합니다.")
+    public HttpResponse<FindPasswordResponse> findPassword(@Valid @RequestBody FindPasswordRequest findPasswordRequest) {
+        String email = memberService.findPassword(findPasswordRequest.userId(), findPasswordRequest.email());
+        return HttpResponse.okBuild(
+                FindPasswordResponse.of(email)
         );
     }
 

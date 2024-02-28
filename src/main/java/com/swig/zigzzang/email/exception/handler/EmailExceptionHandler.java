@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class EmailExceptionHandler {
-    @ExceptionHandler(EmailNotSendException.class)  // Add a new exception handler for BusinessLogicException
-    @ResponseStatus(HttpStatus.BAD_REQUEST)  // You can set an appropriate HTTP status for this exception
-    public ResponseEntity<ErrorResponse> EmailnotSendExceptionHandler(EmailNotSendException e) {
-        return ResponseEntity.status(e.getHttpStatus())
+    @ExceptionHandler(EmailNotSendException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public HttpResponse<ErrorResponse> EmailnotSendExceptionHandler(EmailNotSendException e) {
+        return HttpResponse.status(e.getHttpStatus())
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }
 }

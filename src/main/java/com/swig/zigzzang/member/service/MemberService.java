@@ -23,6 +23,7 @@ import java.util.Optional;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -160,7 +161,24 @@ public class MemberService {
 
     public String findIdByEmail(String email) {
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(MemberNotFoundException::new);
+                .orElseThrow(()->new MemberNotFoundException(HttpExceptionCode.EMAIL_USER_NOTFOUND));
         return member.getUserId();
+    }
+    public String findPassword(String userId, String email) {
+        Member member= memberRepository.findByUserIdAndEmail(userId, email)
+                .orElseThrow(()->new MemberNotFoundException(HttpExceptionCode.EMAIL_USERID_USER_NOT));
+
+        String newPassword = generateNewPassword();
+        member.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        memberRepository.save(member);
+
+        String title = "직짱건강 임시 비밀번호 발급";
+        mailService.sendEmail(email, title, "새로운 비밀번호 : " + newPassword);
+
+        return email ;
+    }
+    private String generateNewPassword() {
+
+        return RandomStringUtils.randomAlphanumeric(10);
     }
 }
