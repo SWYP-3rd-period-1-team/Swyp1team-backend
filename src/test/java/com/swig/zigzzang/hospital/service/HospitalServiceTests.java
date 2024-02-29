@@ -2,7 +2,9 @@ package com.swig.zigzzang.hospital.service;
 
 
 import com.swig.zigzzang.global.P6Spy.P6SpyConfig;
+import com.swig.zigzzang.hospital.repository.HospitalCommentRepository;
 import com.swig.zigzzang.hospital.repository.HospitalRepository;
+import com.swig.zigzzang.member.domain.Member;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,26 +25,36 @@ public class HospitalServiceTests {
     @Mock
     private HospitalRepository hospitalRepository; // 가짜  HospitalRepository 객체 생성
 
+    @Mock
+    private HospitalCommentRepository hospitalCommentRepository;
+
     @InjectMocks
     private HospitalService hospitalService;
 
-    private final Long googleMapId = 1000L;
+    private static Member member;
 
-    
+    @BeforeAll
+    static void setup() {
+
+    }
+
+
     // TODO : 병원 등록 관련
     @Test
-    @DisplayName("병원등록실패_이미존재함")
-    void addHospitalTest() {
+    @DisplayName("병원 댓글 등록")
+    void saveHospitalBookmarkTest() {
 
-        /*// given
-        doReturn(Hospital.builder().build())
-                .when(hospitalRepository).findByGooleMapId(googleMapId);*/
+        // given
+
 
         // when
 
 
         // then
     }
+
+
+
 
 
 }

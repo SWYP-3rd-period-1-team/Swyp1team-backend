@@ -7,19 +7,16 @@ spring:
     hikari:
       maximum-pool-size: 20
   jpa:
-    hibernate:
-      ddl-auto: create
-    defer-datasource-initialization: true
     properties:
       hibernate:
         default_batch_fetch_size: 1000
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
   jwt:
     secret: ${jwt_secret}
-
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: true
 
   mail:
     host: smtp.gmail.com
@@ -41,6 +38,14 @@ decorator:
     redis:
       host: ${redis_host}
       port: ${redis_port}
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
+
+
 
 
 
