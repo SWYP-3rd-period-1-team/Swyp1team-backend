@@ -86,12 +86,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         //RT : 7일
         String refreshToken = jwtUtil.createRefreshToken(username, password, 86400000*7L);
 
-
-        response.addHeader("Authorization", "Bearer " + accessToken);
-        response.addHeader("RefreshToken","Bearer "+refreshToken);
+        sendTokenResponse(response,accessToken,refreshToken);
         Cookie cookie = createCookie(refreshToken);
         response.addCookie(cookie);
-        setResponse(response,200,username+"님 ! 로그인을 성공하셨습니다 ! ");
 
 
     }
@@ -118,5 +115,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(status);
         response.getWriter().print(message);
+    }
+    private void sendTokenResponse(HttpServletResponse response, String AT,String RT ) throws IOException {
+        String jsonResponse = "{\"accessToken\": \"" +"Bearer " + AT +
+                "\", \"refreshToken\": \"" +"Bearer "+ RT + "\"}";
+
+        response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(HttpStatus.OK.value());
+        response.getWriter().print(jsonResponse);
     }
 }
