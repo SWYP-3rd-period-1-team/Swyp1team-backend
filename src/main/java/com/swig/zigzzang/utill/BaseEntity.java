@@ -21,9 +21,9 @@ public abstract class BaseEntity {
     public LocalDateTime createdDate = LocalDateTime.now().plusHours(9);
 
     @LastModifiedDate
-    private LocalDateTime modifyDate;
+    private LocalDateTime modifyDate = LocalDateTime.now().plusHours(9);
+    ;
 
-    public LocalDateTime updatedDate = LocalDateTime.now().plusHours(9);
 
 
 }

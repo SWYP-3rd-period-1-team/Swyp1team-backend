@@ -25,7 +25,7 @@ public class CustomHospitalCommentRepositoryImpl implements CustomHospitalCommen
                 .where(QHospitalComment.hospitalComment.hospital.googleMapId.eq(googleMapId))
                 .orderBy(
                         QHospitalComment.hospitalComment.parent.hospitalCommentId.asc().nullsFirst(),
-                        QHospitalComment.hospitalComment.createDate.asc()
+                        QHospitalComment.hospitalComment.createdDate.asc()
                 ).fetch();
     }
 }
