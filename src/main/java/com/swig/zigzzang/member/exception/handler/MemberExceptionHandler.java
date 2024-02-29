@@ -27,12 +27,14 @@ public class MemberExceptionHandler {
         return ResponseEntity.status(e.getHttpStatus())
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }
+
     @ExceptionHandler(NickNameAlreadyExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ErrorResponse> nickNameAlreadyExistExceptionHandler(NickNameAlreadyExistException e) {
         return ResponseEntity.status(e.getHttpStatus())
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }
+
     @ExceptionHandler(UserIdAlreadyExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ErrorResponse> userIdAlreadyExistExceptionHandler(UserIdAlreadyExistException e) {
@@ -40,9 +42,6 @@ public class MemberExceptionHandler {
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }
 
-    @ExceptionHandler(MemberNotExistException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorResponse> userIdNotExistExceptionHandler(MemberNotExistException e) {
 
     @ExceptionHandler(MemberNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -50,6 +49,7 @@ public class MemberExceptionHandler {
         return ResponseEntity.status(e.getHttpStatus())
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }
+
     @ExceptionHandler(EmailCodeFailedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<ErrorResponse> emailCodeFailedExceptionHandler(EmailCodeFailedException e) {
