@@ -10,6 +10,10 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 1000
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
+
     database: mysql
     show-sql: true
     hibernate:
@@ -38,14 +42,16 @@ spring:
     redis:
       host: ${redis_host}
       port: ${redis_port}
+      password : ${redis_password}
 
 decorator:
   datasource:
     p6spy:
       enable-logging: true
 
-
-
+logging:
+  level:
+    org.hibernate.SQL: debug
 
 
 

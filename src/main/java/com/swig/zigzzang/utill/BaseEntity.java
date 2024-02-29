@@ -1,6 +1,7 @@
 package com.swig.zigzzang.utill;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
@@ -16,9 +17,13 @@ import java.time.LocalDateTime;
 public abstract class BaseEntity {
 
     @CreatedDate
-    private LocalDateTime createDate;
+    @Column(updatable = false)
+    public LocalDateTime createdDate = LocalDateTime.now().plusHours(9);
 
     @LastModifiedDate
     private LocalDateTime modifyDate;
+
+    public LocalDateTime updatedDate = LocalDateTime.now().plusHours(9);
+
 
 }

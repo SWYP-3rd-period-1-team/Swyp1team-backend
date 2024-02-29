@@ -2,6 +2,7 @@ package com.swig.zigzzang.member.domain;
 
 
 import com.swig.zigzzang.survey.domain.Survey;
+import com.swig.zigzzang.utill.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +44,9 @@ public class Member {
 
     @Column
     private String email;
+
+    @Column
+    private String profileimage;
 
     @OneToMany(mappedBy = "member")
     private List<Survey> surveys;

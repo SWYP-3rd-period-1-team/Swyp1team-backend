@@ -40,6 +40,7 @@ jobs:
           spring.mail.password: ${{secrets.MAIL_PASSWORD}}
           spring.data.redis.host: ${{secrets.REDIS_HOST}}
           spring.data.redis.port: ${{secrets.REDIS_PORT}}
+          spring.data.redis.password: ${{secrets.REDIS_PASSWORD}}
 
 
       #gradlew 실행을 위한 권한 추가
