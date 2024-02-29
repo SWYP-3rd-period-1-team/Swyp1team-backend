@@ -6,8 +6,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member_hospital")
+@Builder
 @Getter
 public class MemberHospital {
 
@@ -25,16 +27,11 @@ public class MemberHospital {
     private Hospital hospital;
 
     @Column
-    private Long star; // 별점
-
-    @Column
     private Boolean bookmark; // 찜 여부
 
-    @Builder
-    public MemberHospital(Member member, Hospital hospital, Long star) {
-        this.member = member;
-        this.hospital = hospital;
-        this.star = star;
-        this.bookmark = false;
+
+    // 북마크 여부 setting
+    public void setBookmark(Boolean bookmark) {
+        this.bookmark = bookmark;
     }
 }

@@ -3,6 +3,9 @@ package com.swig.zigzzang.hospital.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,6 +19,9 @@ public class Hospital  { // 병원 Entity
     private Long hospitalId;
 
     @Column
-    private Long googleMapId;
+    private String googleMapId;
 
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "hospital_id")
+    private Set<HospitalComment> hospitalCommentList = new HashSet<>();
 }

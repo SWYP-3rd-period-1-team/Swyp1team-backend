@@ -4,6 +4,7 @@ import com.swig.zigzzang.global.response.ErrorResponse;
 import com.swig.zigzzang.global.response.HttpResponse;
 import com.swig.zigzzang.member.exception.EmailCodeFailedException;
 import com.swig.zigzzang.member.exception.MemberExistException;
+import com.swig.zigzzang.member.exception.MemberNotExistException;
 import com.swig.zigzzang.member.exception.MemberNotFoundException;
 import com.swig.zigzzang.member.exception.NickNameAlreadyExistException;
 import com.swig.zigzzang.member.exception.UserIdAlreadyExistException;
@@ -38,6 +39,11 @@ public class MemberExceptionHandler {
         return ResponseEntity.status(e.getHttpStatus())
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }
+
+    @ExceptionHandler(MemberNotExistException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponse> userIdNotExistExceptionHandler(MemberNotExistException e) {
+
     @ExceptionHandler(MemberNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> memberNotFoundExceptionHandler(MemberNotFoundException e) {
@@ -47,6 +53,7 @@ public class MemberExceptionHandler {
     @ExceptionHandler(EmailCodeFailedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<ErrorResponse> emailCodeFailedExceptionHandler(EmailCodeFailedException e) {
+
         return ResponseEntity.status(e.getHttpStatus())
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }

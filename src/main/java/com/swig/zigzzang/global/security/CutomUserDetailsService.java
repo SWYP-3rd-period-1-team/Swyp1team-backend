@@ -25,7 +25,6 @@ public class CutomUserDetailsService implements UserDetailsService {
         Optional<Member> member = memberRepository.findByUserId(username);
 
 
-
         if (member != null) {
 
             return new CustomUserDetails(member.get());
