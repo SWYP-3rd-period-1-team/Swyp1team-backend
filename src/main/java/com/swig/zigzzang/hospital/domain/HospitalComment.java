@@ -48,8 +48,19 @@ public class HospitalComment extends BaseEntity { // 병원 댓글 Entity
 
 
     @Builder.Default
-    @OneToMany(mappedBy = "parent",orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", orphanRemoval = true)
     private List<HospitalComment> childCommentList = new ArrayList<>();
 
+
+    // 댓글 수정 메서드
+    public void updateComment(String content) {
+        this.content = content;
+    }
+
+
+    // 댓글 삭제 상태 변경 메서드
+    public void changeDeleteStatus() {
+        this.isDeleted = true;
+    }
 
 }

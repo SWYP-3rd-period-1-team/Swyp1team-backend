@@ -24,4 +24,5 @@ public class Hospital  { // 병원 Entity
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "hospital_id")
     private Set<HospitalComment> hospitalCommentList = new HashSet<>();
+
 }

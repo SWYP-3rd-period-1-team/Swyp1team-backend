@@ -10,9 +10,8 @@ public record HospitalDetailsResponse(
         List<HospitalCommentDTO> commentDTOList
 ) {
     public static HospitalDetailsResponse of(List<HospitalCommentDTO> commentList) {
-        return HospitalDetailsResponse.builder()
-                .commentDTOList(commentList)
-                .build();
-
+            return HospitalDetailsResponse.builder()
+                    .commentDTOList(commentList)
+                    .build();
     }
 }
