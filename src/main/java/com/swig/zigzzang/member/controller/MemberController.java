@@ -53,9 +53,10 @@ public class MemberController {
     @PostMapping("/refresh")
     @Operation(summary = "AccessToken 갱신", description = "만료된 AccessToken을 RefreshToken을 사용해 갱신합니다.")
     public HttpResponse<TokenRefreshResponse> refreshToken(@RequestBody TokenRefreshRequest refreshRequest) {
-        String newAccessToken = memberService.refreshToken(refreshRequest.refreshToken());
+        String newAccessToken = memberService.reisuueAccessToken(refreshRequest.refreshToken());
+        String newRefreshToken = memberService.reissueRefreshToken(refreshRequest.refreshToken());
         return HttpResponse.okBuild(
-                TokenRefreshResponse.of(newAccessToken)
+                TokenRefreshResponse.of(newAccessToken,newRefreshToken)
         );
     }
     @PatchMapping("/logout")

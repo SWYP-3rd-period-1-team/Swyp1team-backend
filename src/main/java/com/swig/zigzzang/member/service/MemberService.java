@@ -108,13 +108,12 @@ public class MemberService {
 
         return authResult;
     }
-    public String refreshToken(String encryptedRefreshToken) {
+    public String reisuueAccessToken(String encryptedRefreshToken) {
         isTokenPresent(encryptedRefreshToken);
         //앞의 Bearer 삭제후 순수 RT 추출
         String pureRefreshToken = getBearerSubstring(encryptedRefreshToken);
         //redis에서 해당 키 검색해서 해당 토큰에 대응하는 key 추출
         String userId = redisService.getValues(pureRefreshToken);
-        System.out.println("userId="+userId);
         //RT가 redis에 저장된 값이랑 일치하는지 확인
         if (!redisService.checkExistsValue(userId)) {
             throw new IncorrectRefreshTokenException();
@@ -126,8 +125,34 @@ public class MemberService {
         //jwt AT 생성
         String newAccessToken = getAccessToken(member);
 
+
         return "Bearer " + newAccessToken;
     }
+
+    public String reissueRefreshToken(String encryptedRefreshToken) {
+        isTokenPresent(encryptedRefreshToken);
+        //앞의 Bearer 삭제후 순수 RT 추출
+        String pureRefreshToken = getBearerSubstring(encryptedRefreshToken);
+        //redis에서 해당 키 검색해서 해당 토큰에 대응하는 key 추출
+        String userId = redisService.getValues(pureRefreshToken);
+        //RT가 redis에 저장된 값이랑 일치하는지 확인
+        if (!redisService.checkExistsValue(userId)) {
+            throw new IncorrectRefreshTokenException();
+        }
+
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(MemberNotFoundException::new);
+
+        //jwt RT 생성(RTR 기법 도입)
+        String newrefreshToken = getRefreshToken(member);
+        //기존 RT 삭제
+        redisService.deleteValues(encryptedRefreshToken);
+
+        return "Bearer " + newrefreshToken;
+
+
+    }
+
 
 
     public String logout(String encryptedRefreshToken) {
@@ -160,7 +185,13 @@ public class MemberService {
         return encryptedRefreshToken.substring(7);
     }
     private String getAccessToken( Member user) {
-        return jwtUtil.createJwt(user.getUserId(), user.getPassword(), 86400000 * 7L);
+        return jwtUtil.createJwt(user.getUserId(), user.getPassword(), 60*60*100L);
+    }
+
+    private String getRefreshToken(Member user) {
+        String refreshToken = jwtUtil.createRefreshToken(user.getUserId(), user.getPassword(), 86400000*7L);
+
+        return refreshToken;
     }
 
     public String findIdByEmail(String email) {
