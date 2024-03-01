@@ -193,11 +193,12 @@ public class MemberService {
         Member member = memberRepository.findByUserId(userId)
                 .orElseThrow(() -> new MemberNotFoundException(HttpExceptionCode.USER_NOT_FOUND));
 
-        if (!bCryptPasswordEncoder.matches(changePasswordRequest.currentPassword(), member.getPassword())) {
+        String newpassword = changePasswordRequest.newPassword();
+        String confirmpassowrd = changePasswordRequest.confirmPassword();
+        if (!newpassword.equals(confirmpassowrd)) {
             throw new IncorrectPasswordException();
         }
 
-        String newpassword = changePasswordRequest.newPassword();
         member.setPassword(bCryptPasswordEncoder.encode(newpassword));
         memberRepository.save(member);
 
