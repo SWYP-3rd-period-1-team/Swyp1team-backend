@@ -3,6 +3,8 @@ package com.swig.zigzzang.member.controller;
 import com.swig.zigzzang.global.response.HttpResponse;
 import com.swig.zigzzang.global.security.JWTUtil;
 import com.swig.zigzzang.member.domain.Member;
+import com.swig.zigzzang.member.dto.ChangeNicknameRequest;
+import com.swig.zigzzang.member.dto.ChangeNicknameResponse;
 import com.swig.zigzzang.member.dto.ChangePasswordRequest;
 import com.swig.zigzzang.member.dto.ChangePasswordResponse;
 import com.swig.zigzzang.member.dto.FindIdRequest;
@@ -90,6 +92,17 @@ public class MemberController {
         String changedPassword = memberService.changePassword(changePasswordRequest);
         return HttpResponse.okBuild(
                 ChangePasswordResponse.of(changedPassword)
+        );
+    }
+
+    @PatchMapping("/change-nickname")
+    @Operation(summary = "닉네임 변경", description = "새로운 닉네임으로 변경합니다.")
+    public HttpResponse<ChangeNicknameResponse> changeNickname(@RequestBody @Valid ChangeNicknameRequest changeNicknameRequest) {
+
+        String changedNickname = memberService.changeNickname(changeNicknameRequest);
+        return HttpResponse.okBuild(
+                ChangeNicknameResponse.of(changedNickname)
+
         );
     }
 

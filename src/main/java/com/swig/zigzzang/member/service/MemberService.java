@@ -8,6 +8,7 @@ import com.swig.zigzzang.global.exception.custom.security.SecurityJwtNotFoundExc
 import com.swig.zigzzang.global.redis.RedisService;
 import com.swig.zigzzang.global.security.JWTUtil;
 import com.swig.zigzzang.member.domain.Member;
+import com.swig.zigzzang.member.dto.ChangeNicknameRequest;
 import com.swig.zigzzang.member.dto.ChangePasswordRequest;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.exception.EmailCodeFailedException;
@@ -203,5 +204,21 @@ public class MemberService {
         memberRepository.save(member);
 
         return newpassword;
+    }
+    public String changeNickname(ChangeNicknameRequest changeNicknameRequest) {
+        String userId = getUsernameBySecurityContext();
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(() -> new MemberNotFoundException(HttpExceptionCode.USER_NOT_FOUND));
+
+        Optional<Member> existingNickname = memberRepository.findByNickname(changeNicknameRequest.newNickname());
+        if (existingNickname.isPresent()) {
+            throw new NickNameAlreadyExistException();
+        }
+        String newNickname = changeNicknameRequest.newNickname();
+
+        member.setNickname(changeNicknameRequest.newNickname());
+        memberRepository.save(member);
+
+        return newNickname;
     }
 }
