@@ -221,4 +221,12 @@ public class MemberService {
 
         return newNickname;
     }
+
+    public void updateProfileImage(String userId, String imageUrl) {
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(MemberNotFoundException::new);
+
+        member.setProfileimage(imageUrl);
+        memberRepository.save(member);
+    }
 }
