@@ -5,6 +5,7 @@ import com.swig.zigzzang.hospital.domain.Hospital;
 import com.swig.zigzzang.hospital.domain.HospitalComment;
 import com.swig.zigzzang.hospital.domain.MemberHospital;
 import com.swig.zigzzang.hospital.dto.request.*;
+import com.swig.zigzzang.hospital.dto.util.BookmarkDTO;
 import com.swig.zigzzang.hospital.dto.util.HospitalCommentDTO;
 import com.swig.zigzzang.hospital.exception.CommentUpdateAuthException;
 import com.swig.zigzzang.hospital.exception.HospitalNotExistException;
@@ -189,4 +190,22 @@ public class HospitalService {
     }
 
 
+    public void addCommentReport(String loginUserId, String hospitalId, Long commentId) { // 댓글 신고
+
+        HospitalComment target = hospitalCommentRepository.findByHospitalCommentId(commentId)
+                .orElseThrow(CommentExistException::new);
+
+        target.updateReportCount(); // 신고수 +1
+
+        hospitalCommentRepository.save(target);
+
+    }
+
+    public List<BookmarkDTO> findBookmarkList(String loginUserId) { // 병원 찜 목록
+
+        List<Hospital> target = customHospitalCommentRepository.findHospitalsByUserIdWithBookmark(loginUserId);
+
+        return BookmarkDTO.of(target);
+
+    }
 }

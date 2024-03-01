@@ -11,4 +11,5 @@ public interface HospitalCommentRepository extends JpaRepository<HospitalComment
 
     Optional<HospitalComment> findByHospitalCommentId(Long commentId);
 
+
 }
