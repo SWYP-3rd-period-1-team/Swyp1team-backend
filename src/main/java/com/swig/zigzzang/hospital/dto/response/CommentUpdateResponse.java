@@ -9,7 +9,7 @@ public record CommentUpdateResponse(
 ) {
     public static CommentUpdateResponse of() {
         return CommentUpdateResponse.builder()
-                .message("댓글이 등록되었습니다.")
+                .message("댓글이 수정되었습니다.")
                 .build();
 
     }

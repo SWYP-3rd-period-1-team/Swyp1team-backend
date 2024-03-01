@@ -8,7 +8,9 @@ public record CommentInsertResponse(
         String message
 ) {
     public static CommentInsertResponse of() {
-        return new CommentInsertResponse("댓글이 등록되었습니다.");
+        return  CommentInsertResponse.builder()
+                .message("댓글이 등록되었습니다.")
+                .build();
 
     }
 }
