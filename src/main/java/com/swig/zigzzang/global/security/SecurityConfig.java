@@ -82,7 +82,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/api/members/join","api/members/refresh","/login").permitAll()
-                        .requestMatchers("/api/members/find-id","api/members/find-password","/userinfo","/").permitAll()
+                        .requestMatchers("/api/members/find-id","api/members/find-password","/userinfo","/","/index.html").permitAll()
                         .requestMatchers("/api/emails/verification-requests","api/emails/verification").permitAll()
                         .requestMatchers("/api/hospitals","/api/hospitals/hospital-details").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()

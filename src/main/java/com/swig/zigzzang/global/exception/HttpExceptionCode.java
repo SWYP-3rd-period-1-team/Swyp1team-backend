@@ -27,9 +27,10 @@ public enum HttpExceptionCode {
     EMAIL_USER_NOTFOUND(HttpStatus.NOT_FOUND, "해당하는 이메일의 사용자가 존재하지 않습니다."),
     EMAIL_USERID_USER_NOT(HttpStatus.NOT_FOUND, "해당하는 이메일, 아이디에 일치하는 사용자를 찾을수 없습니다."),
 
-    // 병원 괸련 exceptionCode
     HOSPITAL_NOT_EXIST(HttpStatus.NOT_FOUND, "해당 병원이 존재하지 않습니다."),
-    COMMENT_NOT_EXIST(HttpStatus.NOT_FOUND,"해당 댓글이 존재하지 않습니다.");
+    COMMENT_NOT_EXIST(HttpStatus.NOT_FOUND,"해당 댓글이 존재하지 않습니다."),
+
+    INCORRECT_PASSWORD(HttpStatus.UNAUTHORIZED,"현재 비밀번호가 올바르지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

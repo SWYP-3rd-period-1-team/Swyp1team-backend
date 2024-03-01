@@ -8,8 +8,10 @@ import com.swig.zigzzang.global.exception.custom.security.SecurityJwtNotFoundExc
 import com.swig.zigzzang.global.redis.RedisService;
 import com.swig.zigzzang.global.security.JWTUtil;
 import com.swig.zigzzang.member.domain.Member;
+import com.swig.zigzzang.member.dto.ChangePasswordRequest;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.exception.EmailCodeFailedException;
+import com.swig.zigzzang.member.exception.IncorrectPasswordException;
 import com.swig.zigzzang.member.exception.MemberExistException;
 import com.swig.zigzzang.member.exception.MemberNotFoundException;
 import com.swig.zigzzang.member.exception.NickNameAlreadyExistException;
@@ -25,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -180,5 +183,24 @@ public class MemberService {
     private String generateNewPassword() {
 
         return RandomStringUtils.randomAlphanumeric(10);
+    }
+    public String getUsernameBySecurityContext() {
+        return SecurityContextHolder.getContext().getAuthentication()
+                .getName();
+    }
+    public String changePassword(ChangePasswordRequest changePasswordRequest) {
+        String userId = getUsernameBySecurityContext();
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(() -> new MemberNotFoundException(HttpExceptionCode.USER_NOT_FOUND));
+
+        if (!bCryptPasswordEncoder.matches(changePasswordRequest.currentPassword(), member.getPassword())) {
+            throw new IncorrectPasswordException();
+        }
+
+        String newpassword = changePasswordRequest.newPassword();
+        member.setPassword(bCryptPasswordEncoder.encode(newpassword));
+        memberRepository.save(member);
+
+        return newpassword;
     }
 }
