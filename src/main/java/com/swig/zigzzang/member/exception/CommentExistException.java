@@ -18,7 +18,7 @@ public class CommentExistException extends RuntimeException{
     }
 
     public CommentExistException() {
-        this(HttpExceptionCode.MEMBER_EXISTS);
+        this(HttpExceptionCode.COMMENT_NOT_EXIST);
     }
 
 

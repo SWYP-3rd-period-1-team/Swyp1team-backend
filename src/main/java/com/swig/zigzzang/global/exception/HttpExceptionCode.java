@@ -30,7 +30,12 @@ public enum HttpExceptionCode {
     HOSPITAL_NOT_EXIST(HttpStatus.NOT_FOUND, "해당 병원이 존재하지 않습니다."),
     COMMENT_NOT_EXIST(HttpStatus.NOT_FOUND,"해당 댓글이 존재하지 않습니다."),
 
+
     INCORRECT_PASSWORD(HttpStatus.UNAUTHORIZED,"비밀번호 확인과 새로운 비밀번호가 일치하지 않습니다.");
+
+    COMMENT_UPDATE_UNAUTHORIZED(HttpStatus.UNAUTHORIZED,"수정 권한이 없습니다.");
+
+
 
     private final HttpStatus httpStatus;
     private final String message;
