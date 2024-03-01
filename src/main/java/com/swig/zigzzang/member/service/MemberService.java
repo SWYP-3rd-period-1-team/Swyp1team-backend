@@ -8,8 +8,11 @@ import com.swig.zigzzang.global.exception.custom.security.SecurityJwtNotFoundExc
 import com.swig.zigzzang.global.redis.RedisService;
 import com.swig.zigzzang.global.security.JWTUtil;
 import com.swig.zigzzang.member.domain.Member;
+import com.swig.zigzzang.member.dto.ChangeNicknameRequest;
+import com.swig.zigzzang.member.dto.ChangePasswordRequest;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.exception.EmailCodeFailedException;
+import com.swig.zigzzang.member.exception.IncorrectPasswordException;
 import com.swig.zigzzang.member.exception.MemberExistException;
 import com.swig.zigzzang.member.exception.MemberNotFoundException;
 import com.swig.zigzzang.member.exception.NickNameAlreadyExistException;
@@ -25,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -104,13 +108,12 @@ public class MemberService {
 
         return authResult;
     }
-    public String refreshToken(String encryptedRefreshToken) {
+    public String reisuueAccessToken(String encryptedRefreshToken) {
         isTokenPresent(encryptedRefreshToken);
         //앞의 Bearer 삭제후 순수 RT 추출
         String pureRefreshToken = getBearerSubstring(encryptedRefreshToken);
         //redis에서 해당 키 검색해서 해당 토큰에 대응하는 key 추출
         String userId = redisService.getValues(pureRefreshToken);
-        System.out.println("userId="+userId);
         //RT가 redis에 저장된 값이랑 일치하는지 확인
         if (!redisService.checkExistsValue(userId)) {
             throw new IncorrectRefreshTokenException();
@@ -122,8 +125,34 @@ public class MemberService {
         //jwt AT 생성
         String newAccessToken = getAccessToken(member);
 
+
         return "Bearer " + newAccessToken;
     }
+
+    public String reissueRefreshToken(String encryptedRefreshToken) {
+        isTokenPresent(encryptedRefreshToken);
+        //앞의 Bearer 삭제후 순수 RT 추출
+        String pureRefreshToken = getBearerSubstring(encryptedRefreshToken);
+        //redis에서 해당 키 검색해서 해당 토큰에 대응하는 key 추출
+        String userId = redisService.getValues(pureRefreshToken);
+        //RT가 redis에 저장된 값이랑 일치하는지 확인
+        if (!redisService.checkExistsValue(userId)) {
+            throw new IncorrectRefreshTokenException();
+        }
+
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(MemberNotFoundException::new);
+
+        //jwt RT 생성(RTR 기법 도입)
+        String newrefreshToken = getRefreshToken(member);
+        //기존 RT 삭제
+        redisService.deleteValues(encryptedRefreshToken);
+
+        return "Bearer " + newrefreshToken;
+
+
+    }
+
 
 
     public String logout(String encryptedRefreshToken) {
@@ -156,7 +185,13 @@ public class MemberService {
         return encryptedRefreshToken.substring(7);
     }
     private String getAccessToken( Member user) {
-        return jwtUtil.createJwt(user.getUserId(), user.getPassword(), 86400000 * 7L);
+        return jwtUtil.createJwt(user.getUserId(), user.getPassword(), 60*60*100L);
+    }
+
+    private String getRefreshToken(Member user) {
+        String refreshToken = jwtUtil.createRefreshToken(user.getUserId(), user.getPassword(), 86400000*7L);
+
+        return refreshToken;
     }
 
     public String findIdByEmail(String email) {
@@ -180,5 +215,49 @@ public class MemberService {
     private String generateNewPassword() {
 
         return RandomStringUtils.randomAlphanumeric(10);
+    }
+    public String getUsernameBySecurityContext() {
+        return SecurityContextHolder.getContext().getAuthentication()
+                .getName();
+    }
+    public String changePassword(ChangePasswordRequest changePasswordRequest) {
+        String userId = getUsernameBySecurityContext();
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(() -> new MemberNotFoundException(HttpExceptionCode.USER_NOT_FOUND));
+
+        String newpassword = changePasswordRequest.newPassword();
+        String confirmpassowrd = changePasswordRequest.confirmPassword();
+        if (!newpassword.equals(confirmpassowrd)) {
+            throw new IncorrectPasswordException();
+        }
+
+        member.setPassword(bCryptPasswordEncoder.encode(newpassword));
+        memberRepository.save(member);
+
+        return newpassword;
+    }
+    public String changeNickname(ChangeNicknameRequest changeNicknameRequest) {
+        String userId = getUsernameBySecurityContext();
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(() -> new MemberNotFoundException(HttpExceptionCode.USER_NOT_FOUND));
+
+        Optional<Member> existingNickname = memberRepository.findByNickname(changeNicknameRequest.newNickname());
+        if (existingNickname.isPresent()) {
+            throw new NickNameAlreadyExistException();
+        }
+        String newNickname = changeNicknameRequest.newNickname();
+
+        member.setNickname(changeNicknameRequest.newNickname());
+        memberRepository.save(member);
+
+        return newNickname;
+    }
+
+    public void updateProfileImage(String userId, String imageUrl) {
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(MemberNotFoundException::new);
+
+        member.setProfileimage(imageUrl);
+        memberRepository.save(member);
     }
 }
