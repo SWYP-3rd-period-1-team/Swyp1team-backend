@@ -63,4 +63,8 @@ public class HospitalComment extends BaseEntity { // 병원 댓글 Entity
         this.isDeleted = true;
     }
 
+    // 신고 증가 메서드
+    public void updateReportCount() {
+        this.reportCount += 1;
+    }
 }

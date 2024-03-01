@@ -2,8 +2,8 @@ package com.swig.zigzzang.hospital.repository.QueryDsl;
 
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.swig.zigzzang.hospital.domain.HospitalComment;
-import com.swig.zigzzang.hospital.domain.QHospitalComment;
+import com.swig.zigzzang.hospital.domain.*;
+import com.swig.zigzzang.member.domain.QMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,16 +16,33 @@ public class CustomHospitalCommentRepositoryImpl implements CustomHospitalCommen
 
     private final JPAQueryFactory jpaQueryFactory;
 
+    QHospitalComment hospitalComment = QHospitalComment.hospitalComment;
+    QMemberHospital memberHospital = QMemberHospital.memberHospital;
+    QHospital hospital = QHospital.hospital;
+    QMember member = QMember.member;
+
 
     @Override
     public List<HospitalComment> findHospitalCommentsByGoogleMapId(String googleMapId) {
-        return jpaQueryFactory.selectFrom(QHospitalComment.hospitalComment)
-                .leftJoin(QHospitalComment.hospitalComment.parent)
+        return jpaQueryFactory.selectFrom(hospitalComment)
+                .leftJoin(hospitalComment.parent)
                 .fetchJoin()
-                .where(QHospitalComment.hospitalComment.hospital.googleMapId.eq(googleMapId))
+                .where(hospitalComment.hospital.googleMapId.eq(googleMapId))
                 .orderBy(
-                        QHospitalComment.hospitalComment.parent.hospitalCommentId.asc().nullsFirst(),
-                        QHospitalComment.hospitalComment.createdDate.asc()
+                        hospitalComment.parent.hospitalCommentId.asc().nullsFirst(),
+                        hospitalComment.createdDate.asc()
                 ).fetch();
+    }
+
+    @Override
+    public List<Hospital> findHospitalsByUserIdWithBookmark(String userId) {
+        return jpaQueryFactory.select(hospital)
+                .from(memberHospital)
+                .join(memberHospital.hospital, hospital)
+                .join(memberHospital.member,member)
+                .where(member.userId.eq(userId)
+                        .and(memberHospital.bookmark.isTrue()))
+                .fetch();
+
     }
 }
