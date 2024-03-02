@@ -267,4 +267,8 @@ public class MemberService {
         member.setProfileimage(imageUrl);
         memberRepository.save(member);
     }
+    public Member findMemberByUsername(String username) {
+        return memberRepository.findByUserId(username)
+                .orElseThrow(() -> new MemberNotFoundException(HttpExceptionCode.USER_NOT_FOUND));
+    }
 }

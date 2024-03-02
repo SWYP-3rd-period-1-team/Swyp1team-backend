@@ -14,6 +14,7 @@ import com.swig.zigzzang.member.dto.FindPasswordResponse;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.dto.MemberJoinResponse;
 import com.swig.zigzzang.member.dto.MemberLogoutResponse;
+import com.swig.zigzzang.member.dto.MypageResponse;
 import com.swig.zigzzang.member.dto.TokenRefreshRequest;
 import com.swig.zigzzang.member.dto.TokenRefreshResponse;
 import com.swig.zigzzang.member.service.MemberService;
@@ -25,6 +26,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -127,6 +129,15 @@ public class MemberController {
 
         return HttpResponse.okBuild(
                 ChangeProfileImageResponse.of(imageUrl)
+        );
+    }
+    @GetMapping("/my-page")
+    @Operation(summary = "마이페이지 정보 조회", description = "현재 로그인한 사용자의 마이페이지 정보를 조회합니다.")
+    public HttpResponse<MypageResponse> getMyPage() {
+        String username = memberService.getUsernameBySecurityContext();
+        Member member = memberService.findMemberByUsername(username);
+        return HttpResponse.okBuild(
+                MypageResponse.from(member)
         );
     }
 
