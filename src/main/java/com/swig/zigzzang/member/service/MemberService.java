@@ -213,8 +213,15 @@ public class MemberService {
         return email ;
     }
     private String generateNewPassword() {
+        String randomString = RandomStringUtils.randomAlphanumeric(9);
 
-        return RandomStringUtils.randomAlphanumeric(10);
+        int randomIndex = (int) (Math.random() * 9);
+
+        char randomNumber = (char) ('0' + (int) (Math.random() * 10));
+        char[] newPasswordChars = randomString.toCharArray();
+        newPasswordChars[randomIndex] = randomNumber;
+
+        return new String(newPasswordChars);
     }
     public String getUsernameBySecurityContext() {
         return SecurityContextHolder.getContext().getAuthentication()
