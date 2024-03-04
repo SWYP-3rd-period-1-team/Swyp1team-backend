@@ -12,6 +12,7 @@ import com.swig.zigzzang.member.dto.ChangeNicknameRequest;
 import com.swig.zigzzang.member.dto.ChangePasswordRequest;
 import com.swig.zigzzang.member.dto.MemberJoinRequest;
 import com.swig.zigzzang.member.exception.EmailCodeFailedException;
+import com.swig.zigzzang.member.exception.EmailVerificationException;
 import com.swig.zigzzang.member.exception.IncorrectPasswordException;
 import com.swig.zigzzang.member.exception.MemberExistException;
 import com.swig.zigzzang.member.exception.MemberNotFoundException;
@@ -270,5 +271,10 @@ public class MemberService {
     public Member findMemberByUsername(String username) {
         return memberRepository.findByUserId(username)
                 .orElseThrow(() -> new MemberNotFoundException(HttpExceptionCode.USER_NOT_FOUND));
+    }
+    public void verifyEmail(String email) {
+        if (!memberRepository.existsByEmail(email)) {
+            throw new EmailVerificationException();
+        }
     }
 }

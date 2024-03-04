@@ -3,6 +3,7 @@ package com.swig.zigzzang.member.exception.handler;
 import com.swig.zigzzang.global.response.ErrorResponse;
 import com.swig.zigzzang.global.response.HttpResponse;
 import com.swig.zigzzang.member.exception.EmailCodeFailedException;
+import com.swig.zigzzang.member.exception.EmailVerificationException;
 import com.swig.zigzzang.member.exception.IncorrectPasswordException;
 import com.swig.zigzzang.member.exception.MemberExistException;
 import com.swig.zigzzang.member.exception.MemberNotExistException;
@@ -67,6 +68,13 @@ public class MemberExceptionHandler {
     @ExceptionHandler(IncorrectPasswordException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<ErrorResponse> incorrectPasswordExceptionHandler(IncorrectPasswordException e) {
+        return ResponseEntity.status(e.getHttpStatus())
+                .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
+    }
+
+    @ExceptionHandler(EmailVerificationException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponse> emailVerificationExceptionHandler(EmailVerificationException e) {
         return ResponseEntity.status(e.getHttpStatus())
                 .body(ErrorResponse.from(e.getHttpStatus(), e.getMessage()));
     }
