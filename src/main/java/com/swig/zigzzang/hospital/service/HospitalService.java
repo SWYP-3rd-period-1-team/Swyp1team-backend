@@ -203,7 +203,7 @@ public class HospitalService {
 
     public List<BookmarkDTO> findBookmarkList(String loginUserId) { // 병원 찜 목록
 
-        List<Hospital> target = customHospitalCommentRepository.findHospitalsByUserIdWithBookmark(loginUserId);
+        List<MemberHospital> target = customHospitalCommentRepository.findHospitalsByUserIdWithBookmark(loginUserId);
 
         return BookmarkDTO.of(target);
 

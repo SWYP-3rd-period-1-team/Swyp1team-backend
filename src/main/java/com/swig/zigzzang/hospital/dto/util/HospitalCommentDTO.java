@@ -4,6 +4,8 @@ import com.swig.zigzzang.hospital.domain.HospitalComment;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,8 @@ public class HospitalCommentDTO {
 
     private Long star; // 별점
 
+    private LocalDate lastModifyDate; // 최근 수정 날짜
+
     private List<HospitalCommentDTO> children = new ArrayList<>();
 
 
@@ -33,6 +37,7 @@ public class HospitalCommentDTO {
                         .content("삭제된 댓글입니다.")
                         .reportCount(hospitalComment.getReportCount())
                         .star(hospitalComment.getStar())
+                        .lastModifyDate(LocalDate.from(hospitalComment.getModifyDate()))
                         .children(children)
                         .build() :
 
@@ -42,6 +47,7 @@ public class HospitalCommentDTO {
                         .content(hospitalComment.getContent())
                         .reportCount(hospitalComment.getReportCount())
                         .star(hospitalComment.getStar())
+                        .lastModifyDate(LocalDate.from(hospitalComment.getModifyDate()))
                         .children(children)
                         .build();
 

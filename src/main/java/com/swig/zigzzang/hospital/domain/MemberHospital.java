@@ -2,6 +2,7 @@ package com.swig.zigzzang.hospital.domain;
 
 
 import com.swig.zigzzang.member.domain.Member;
+import com.swig.zigzzang.utill.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import lombok.*;
 @Table(name = "member_hospital")
 @Builder
 @Getter
-public class MemberHospital {
+public class MemberHospital extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
