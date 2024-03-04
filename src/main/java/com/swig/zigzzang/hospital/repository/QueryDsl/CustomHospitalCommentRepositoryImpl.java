@@ -35,13 +35,13 @@ public class CustomHospitalCommentRepositoryImpl implements CustomHospitalCommen
     }
 
     @Override
-    public List<Hospital> findHospitalsByUserIdWithBookmark(String userId) {
-        return jpaQueryFactory.select(hospital)
-                .from(memberHospital)
-                .join(memberHospital.hospital, hospital)
-                .join(memberHospital.member,member)
-                .where(member.userId.eq(userId)
-                        .and(memberHospital.bookmark.isTrue()))
+    public List<MemberHospital> findHospitalsByUserIdWithBookmark(String userId) {
+        return jpaQueryFactory.selectFrom(memberHospital)
+                .leftJoin(memberHospital.member)
+                .fetchJoin()
+                .where(memberHospital.bookmark.isTrue()
+                        .and(memberHospital.member.userId.eq(userId)))
+                .orderBy(memberHospital.createdDate.asc())
                 .fetch();
 
     }
