@@ -33,7 +33,11 @@ public enum HttpExceptionCode {
 
     INCORRECT_PASSWORD(HttpStatus.UNAUTHORIZED,"비밀번호 확인과 새로운 비밀번호가 일치하지 않습니다."),
 
-    COMMENT_UPDATE_UNAUTHORIZED(HttpStatus.UNAUTHORIZED,"수정 권한이 없습니다.");
+    COMMENT_UPDATE_UNAUTHORIZED(HttpStatus.UNAUTHORIZED,"수정 권한이 없습니다."),
+
+    EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND,"사용자의 이메일을 찾을수 없습니다."),
+    SURVERY_NOT_FOUND(HttpStatus.NOT_FOUND,"해당 Surveyid의 질병설문을 찾을수 없습니다."),
+    SURVERY_MEMBER_NOT_EQUAL(HttpStatus.CONFLICT,"해당 사용자의 질병설문이 아닙니다.");
 
 
 

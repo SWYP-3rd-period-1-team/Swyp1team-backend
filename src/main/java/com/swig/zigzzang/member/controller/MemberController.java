@@ -17,11 +17,13 @@ import com.swig.zigzzang.member.dto.MemberLogoutResponse;
 import com.swig.zigzzang.member.dto.MypageResponse;
 import com.swig.zigzzang.member.dto.TokenRefreshRequest;
 import com.swig.zigzzang.member.dto.TokenRefreshResponse;
+import com.swig.zigzzang.member.dto.VerifyEmailRequest;
 import com.swig.zigzzang.member.service.MemberService;
 import com.swig.zigzzang.profile.dto.ChangeProfileImageRequest;
 import com.swig.zigzzang.profile.dto.ChangeProfileImageResponse;
 import com.swig.zigzzang.profile.service.ProfileImageService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +39,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/members")
+@Tag(name = "MemberController", description = "")
+
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
@@ -139,6 +143,12 @@ public class MemberController {
         return HttpResponse.okBuild(
                 MypageResponse.from(member)
         );
+    }
+    @PostMapping("/verify-email")
+    @Operation(summary = "사용자 이메일 확인", description = "비밀번호 변경시 DB에 저장된 이메일과 입력된 이메일을 비교하여 확인합니다.")
+    public HttpResponse<String> verifyEmail(@RequestBody VerifyEmailRequest verifyEmailRequest) {
+        memberService.verifyEmail(verifyEmailRequest.email());
+        return HttpResponse.okBuild("이메일이 확인되었습니다.");
     }
 
 }
