@@ -15,6 +15,6 @@ public class SurveyMemberNotEqualException extends RuntimeException{
     }
 
     public SurveyMemberNotEqualException() {
-        this(HttpExceptionCode.SURVERY_NOT_FOUND);
+        this(HttpExceptionCode.SURVERY_MEMBER_NOT_EQUAL);
     }
 }

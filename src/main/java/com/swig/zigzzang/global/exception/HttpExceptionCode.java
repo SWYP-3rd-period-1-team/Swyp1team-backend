@@ -37,7 +37,7 @@ public enum HttpExceptionCode {
 
     EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND,"사용자의 이메일을 찾을수 없습니다."),
     SURVERY_NOT_FOUND(HttpStatus.NOT_FOUND,"해당 Surveyid의 질병설문을 찾을수 없습니다."),
-    SURVERY_MEMBER_NOT_EQUAL(HttpStatus.CONFLICT,"해당 Surveyid의 질병설문을 찾을수 없습니다.");
+    SURVERY_MEMBER_NOT_EQUAL(HttpStatus.CONFLICT,"해당 사용자의 질병설문이 아닙니다.");
 
 
 
