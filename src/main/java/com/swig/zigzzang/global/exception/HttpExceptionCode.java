@@ -35,7 +35,9 @@ public enum HttpExceptionCode {
 
     COMMENT_UPDATE_UNAUTHORIZED(HttpStatus.UNAUTHORIZED,"수정 권한이 없습니다."),
 
-    EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND,"사용자의 이메일을 찾을수 없습니다.");
+    EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND,"사용자의 이메일을 찾을수 없습니다."),
+    SURVERY_NOT_FOUND(HttpStatus.NOT_FOUND,"해당 Surveyid의 질병설문을 찾을수 없습니다."),
+    SURVERY_MEMBER_NOT_EQUAL(HttpStatus.CONFLICT,"해당 Surveyid의 질병설문을 찾을수 없습니다.");
 
 
 

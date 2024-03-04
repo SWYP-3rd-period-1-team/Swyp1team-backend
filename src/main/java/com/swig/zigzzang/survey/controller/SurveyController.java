@@ -10,7 +10,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,5 +43,11 @@ public class SurveyController {
         return HttpResponse.okBuild(
                 surveyList
         );
+    }
+    @DeleteMapping("/delete/{surveyId}")
+    @Operation(summary = "질병리스트 삭제", description = "건강설문을 삭제합니다.")
+    public HttpResponse<String> deleteSurvey(@PathVariable Long surveyId) {
+        surveyService.deleteSurvey(surveyId);
+        return HttpResponse.okBuild("건강설문 삭제가 완료되었습니다.");
     }
 }

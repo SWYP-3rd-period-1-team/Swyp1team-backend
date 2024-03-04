@@ -7,7 +7,7 @@ import lombok.Builder;
 
 @Builder
 public record SurveySaveResponse(
-        Long id,
+        Long surveyId,
         String userid,
         String targetBodyPart,
         String diagnosisPart,
@@ -19,7 +19,7 @@ public record SurveySaveResponse(
 ) {
     public static SurveySaveResponse of(Survey survey) {
         return SurveySaveResponse.builder()
-                .id(survey.getSurveyId())
+                .surveyId(survey.getSurveyId())
                 .userid(survey.getMember().getUserId())
                 .diagnosisPart(survey.getDiagnosisPart())
                 .presentedSymptom(survey.getPresentedSymptom())
