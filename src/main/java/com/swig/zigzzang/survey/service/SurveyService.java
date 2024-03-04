@@ -32,10 +32,10 @@ public class SurveyService {
 
     public List<SurveyResponse> getSurveysByUserId() {
         String userId = memberService.getUsernameBySecurityContext();
-        Member member = memberRepository.findByUserId(userId)
+        memberRepository.findByUserId(userId)
                 .orElseThrow(MemberNotFoundException::new);
 
-        List<Survey> surveys = member.getSurveys();
+        List<Survey> surveys = surveyRepository.findAllJoinFetch(userId);
 
         return  surveys.stream()
                 .map(survey -> SurveyResponse.of(survey))
