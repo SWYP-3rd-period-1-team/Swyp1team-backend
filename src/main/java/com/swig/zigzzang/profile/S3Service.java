@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
+import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.profile.exception.ImageUploadException;
 import java.io.IOException;
 import java.util.UUID;
@@ -66,4 +67,25 @@ public class S3Service {
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
         return UUID.randomUUID().toString() + extension;
     }
+    public void deleteProfileImage(Member member) {
+
+
+        String profileImage = member.getProfileimage();
+        if (profileImage != null) {
+//            String key = profileImage.substring(profileImage.lastIndexOf("/") + 1);
+            String key = extractString(profileImage, member.getUserId());
+            amazonS3.deleteObject(bucket, key);
+        }
+    }
+    private static String extractString(String input, String keyword) {
+        //사용자명 폴더 포함한 key 값반환하는함수 구현
+        int keywordIndex = input.indexOf(keyword);
+        if (keywordIndex != -1) {
+            return input.substring(keywordIndex);
+        }
+        return null;
+    }
+
+
+
 }
