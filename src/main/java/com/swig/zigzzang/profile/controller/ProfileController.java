@@ -10,6 +10,7 @@ import java.io.IOException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,5 +42,15 @@ public class ProfileController {
     public HttpResponse<String> deleteProfileImage() {
         profileService.deleteProfileImage();
         return HttpResponse.okBuild("프로필 이미지 삭제가 성공하였습니다.");
+    }
+    @PutMapping("/update")
+    @Operation(summary = "프로필 이미지 변경", description = "기존 이미지 삭제후 프로필 이미지를 변경합니다.")
+    public HttpResponse<String> updateProfileImage(UploadImage imageDto) {
+        try {
+            String imageUrl = profileService.updateProfileImage(imageDto);
+            return HttpResponse.okBuild(imageUrl);
+        } catch (IOException e) {
+            throw new ImageUploadException();
+        }
     }
 }

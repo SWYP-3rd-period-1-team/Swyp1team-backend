@@ -50,5 +50,22 @@ public class ProfileService {
         }
     }
 
+    public String updateProfileImage(UploadImage imageDto) throws IOException {
+        MultipartFile profileImage = imageDto.profileImage();
+
+        String userId = memberService.getUsernameBySecurityContext();
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(MemberNotFoundException::new);
+
+        s3Service.deleteProfileImage(member);
+
+        String s3url = s3Service.saveProfileImage(userId, profileImage);
+
+        member.setProfileimage(s3url);
+        memberRepository.save(member);
+
+        return s3url;
+    }
+
 
 }

@@ -72,7 +72,6 @@ public class S3Service {
 
         String profileImage = member.getProfileimage();
         if (profileImage != null) {
-//            String key = profileImage.substring(profileImage.lastIndexOf("/") + 1);
             String key = extractString(profileImage, member.getUserId());
             amazonS3.deleteObject(bucket, key);
         }
