@@ -53,6 +53,18 @@ logging:
   level:
     org.hibernate.SQL: debug
 
+cloud:
+  aws:
+    credentials:
+      accessKey: ${s3_accesskey}
+      secretKey: ${s3_secretkey}
+    s3:
+      bucketName: ${s3_bucketname}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
 
 
 

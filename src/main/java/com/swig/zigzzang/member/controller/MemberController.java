@@ -21,19 +21,16 @@ import com.swig.zigzzang.member.dto.VerifyEmailRequest;
 import com.swig.zigzzang.member.service.MemberService;
 import com.swig.zigzzang.profile.dto.ChangeProfileImageRequest;
 import com.swig.zigzzang.profile.dto.ChangeProfileImageResponse;
-import com.swig.zigzzang.profile.service.ProfileImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,7 +42,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class MemberController {
     private final MemberService memberService;
     private final JWTUtil jwtUtil;
-    private final ProfileImageService profileImageService;
 
     @PostMapping("/join")
     @Operation(summary = "회원가입", description = "회원가입을 실행합니다.")
@@ -119,22 +115,7 @@ public class MemberController {
         );
     }
 
-    @PostMapping("/change-profile-image")
-    @Operation(summary = "프로필 이미지 변경", description = "프로필 이미지를 변경합니다.")
 
-    public HttpResponse<ChangeProfileImageResponse> changeProfileImage(
-            @RequestBody @Valid ChangeProfileImageRequest changeProfileImageRequest
-            ) {
-        MultipartFile imageFile = changeProfileImageRequest.imageFile();
-        String userId = memberService.getUsernameBySecurityContext();
-        String imageUrl = profileImageService.uploadProfileImage(imageFile, userId);
-
-        memberService.updateProfileImage(userId, imageUrl);
-
-        return HttpResponse.okBuild(
-                ChangeProfileImageResponse.of(imageUrl)
-        );
-    }
     @GetMapping("/my-page")
     @Operation(summary = "마이페이지 정보 조회", description = "현재 로그인한 사용자의 마이페이지 정보를 조회합니다.")
     public HttpResponse<MypageResponse> getMyPage() {
