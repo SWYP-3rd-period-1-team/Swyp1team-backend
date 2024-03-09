@@ -51,20 +51,21 @@ public class MemberService {
     private final JWTUtil jwtUtil;
 
 
-
-
     public Member save(MemberJoinRequest memberJoinRequest) {
         Member member = memberJoinRequest.toEntity();
 
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
-        Optional<Member> userId = memberRepository.findByUserId(member.getUserId());
-        if (userId.isPresent()) {
-            throw new UserIdAlreadyExistException();
-        }
-        Optional<Member> nickname = memberRepository.findByNickname(member.getNickname());
-        if (nickname.isPresent()) {
-            throw new NickNameAlreadyExistException();
-        }
+        memberRepository.findByUserId(member.getUserId())
+                .ifPresent(m -> {
+                    throw new UserIdAlreadyExistException();
+                });
+
+        memberRepository.findByNickname(member.getNickname())
+                .ifPresent(m -> {
+                    throw new NickNameAlreadyExistException();
+                });
+
+        checkDuplicatedEmail(member.getEmail());
 
         Member savedmember = memberRepository.save(member);
 
@@ -74,6 +75,7 @@ public class MemberService {
 
         return savedmember;
     }
+
     public void sendCodeToEmail(String toEmail) {
         this.checkDuplicatedEmail(toEmail);
         String title = "직짱건강 이메일 인증 번호";
@@ -84,10 +86,10 @@ public class MemberService {
     }
 
     private void checkDuplicatedEmail(String email) {
-        Optional<Member> member = memberRepository.findByEmail(email);
-        if (member.isPresent()) {
-            throw new MemberExistException(HttpExceptionCode.MEMBER_EXISTS);
-        }
+        memberRepository.findByEmail(email)
+                .ifPresent(m -> {
+                    throw new MemberExistException(HttpExceptionCode.EMAIL_ALREADY_EXIST);
+                });
     }
 
     private String createCode() {
@@ -115,6 +117,7 @@ public class MemberService {
 
         return authResult;
     }
+
     public String reisuueAccessToken(String encryptedRefreshToken) {
         isTokenPresent(encryptedRefreshToken);
         //앞의 Bearer 삭제후 순수 RT 추출
@@ -131,7 +134,6 @@ public class MemberService {
 
         //jwt AT 생성
         String newAccessToken = getAccessToken(member);
-
 
         return "Bearer " + newAccessToken;
     }
@@ -161,7 +163,6 @@ public class MemberService {
     }
 
 
-
     public String logout(String encryptedRefreshToken) {
         isTokenPresent(encryptedRefreshToken);
         //RT가 레디스에 저장된값이랑 일치하는지 확인
@@ -176,39 +177,43 @@ public class MemberService {
         return result;
 
     }
+
     private String addToBlacklist(String encryptedRefreshToken) {
         String blacklistKey = encryptedRefreshToken;
 
-
-        redisService.setValues(blacklistKey, "blacklist",Duration.ofMillis(60*60*100L));
+        redisService.setValues(blacklistKey, "blacklist", Duration.ofMillis(60 * 60 * 100L));
         return "blaklist " + blacklistKey;
     }
+
     private void isTokenPresent(String encryptedRefreshToken) {
         if (encryptedRefreshToken == null) {
             throw new SecurityJwtNotFoundException(HttpExceptionCode.JWT_NOT_FOUND);
         }
     }
+
     private static String getBearerSubstring(String encryptedRefreshToken) {
         return encryptedRefreshToken.substring(7);
     }
-    private String getAccessToken( Member user) {
-        return jwtUtil.createJwt(user.getUserId(), user.getPassword(), 60*60*100L);
+
+    private String getAccessToken(Member user) {
+        return jwtUtil.createJwt(user.getUserId(), user.getPassword(), 60 * 60 * 100L);
     }
 
     private String getRefreshToken(Member user) {
-        String refreshToken = jwtUtil.createRefreshToken(user.getUserId(), user.getPassword(), 86400000*7L);
+        String refreshToken = jwtUtil.createRefreshToken(user.getUserId(), user.getPassword(), 86400000 * 7L);
 
         return refreshToken;
     }
 
     public String findIdByEmail(String email) {
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(()->new MemberNotFoundException(HttpExceptionCode.EMAIL_USER_NOTFOUND));
+                .orElseThrow(() -> new MemberNotFoundException(HttpExceptionCode.EMAIL_USER_NOTFOUND));
         return member.getUserId();
     }
+
     public String findPassword(String userId, String email) {
-        Member member= memberRepository.findByUserIdAndEmail(userId, email)
-                .orElseThrow(()->new MemberNotFoundException(HttpExceptionCode.EMAIL_USERID_USER_NOT));
+        Member member = memberRepository.findByUserIdAndEmail(userId, email)
+                .orElseThrow(() -> new MemberNotFoundException(HttpExceptionCode.EMAIL_USERID_USER_NOT));
 
         String newPassword = generateNewPassword();
         member.setPassword(bCryptPasswordEncoder.encode(newPassword));
@@ -217,8 +222,9 @@ public class MemberService {
         String title = "직짱건강 임시 비밀번호 발급";
         mailService.sendEmail(email, title, "새로운 비밀번호 : " + newPassword);
 
-        return email ;
+        return email;
     }
+
     private String generateNewPassword() {
         String randomString = RandomStringUtils.randomAlphanumeric(9);
 
@@ -230,10 +236,12 @@ public class MemberService {
 
         return new String(newPasswordChars);
     }
+
     public String getUsernameBySecurityContext() {
         return SecurityContextHolder.getContext().getAuthentication()
                 .getName();
     }
+
     public String changePassword(ChangePasswordRequest changePasswordRequest) {
         String userId = getUsernameBySecurityContext();
         Member member = memberRepository.findByUserId(userId)
@@ -250,6 +258,7 @@ public class MemberService {
 
         return newpassword;
     }
+
     public String changeNickname(ChangeNicknameRequest changeNicknameRequest) {
         String userId = getUsernameBySecurityContext();
         Member member = memberRepository.findByUserId(userId)
@@ -274,10 +283,12 @@ public class MemberService {
         member.setProfileimage(imageUrl);
         memberRepository.save(member);
     }
+
     public Member findMemberByUsername(String username) {
         return memberRepository.findByUserId(username)
                 .orElseThrow(() -> new MemberNotFoundException(HttpExceptionCode.USER_NOT_FOUND));
     }
+
     public void verifyEmail(String email) {
         if (!memberRepository.existsByEmail(email)) {
             throw new EmailVerificationException();
