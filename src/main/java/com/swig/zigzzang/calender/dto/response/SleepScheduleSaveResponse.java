@@ -8,7 +8,7 @@ public record SleepScheduleSaveResponse(
 ) {
     public static SleepScheduleSaveResponse of() {
         return SleepScheduleSaveResponse.builder()
-                .message("물 섭취 정보가 저장되었습니다.")
+                .message("수면 시간이 저장되었습니다.")
                 .build();
 
     }

@@ -1,14 +1,12 @@
 package com.swig.zigzzang.calender.repository.QueryDsl;
 
-import com.swig.zigzzang.hospital.domain.HospitalComment;
-import com.swig.zigzzang.hospital.domain.MemberHospital;
+
+import com.querydsl.core.Tuple;
+import com.swig.zigzzang.calender.dto.util.MyCalenderDTO;
 
 import java.util.List;
 
 public interface CustomCalenderRepository {
 
-
-    List<HospitalComment> findHospitalCommentsByGoogleMapId(String googleMapId);
-
-    List<MemberHospital> findHospitalsByUserIdWithBookmark(String userId);
+    MyCalenderDTO fetchEntitiesForMemberAndCalender(Long calenderId);
 }

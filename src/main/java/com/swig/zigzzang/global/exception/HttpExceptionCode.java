@@ -38,9 +38,10 @@ public enum HttpExceptionCode {
     EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND,"사용자의 이메일을 찾을수 없습니다."),
     SURVERY_NOT_FOUND(HttpStatus.NOT_FOUND,"해당 Surveyid의 질병설문을 찾을수 없습니다."),
     SURVERY_MEMBER_NOT_EQUAL(HttpStatus.CONFLICT,"해당 사용자의 질병설문이 아닙니다."),
+
+    CALENDER_NOT_EXIST(HttpStatus.NOT_FOUND,"해당 유저의 캘린더를 찾을 수 없습니다."),
+
     IMAGE_UPLOAD_FAILED(HttpStatus.NOT_FOUND,"이미지 업로드에 실패하였습니다.");
-
-
 
     private final HttpStatus httpStatus;
     private final String message;

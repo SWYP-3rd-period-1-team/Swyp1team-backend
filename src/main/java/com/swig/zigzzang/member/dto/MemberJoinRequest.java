@@ -1,5 +1,6 @@
 package com.swig.zigzzang.member.dto;
 
+import com.swig.zigzzang.calender.domain.Calender;
 import com.swig.zigzzang.member.domain.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
@@ -32,6 +33,11 @@ public record MemberJoinRequest (
 
     }
 
-
+    public Calender toCalenderEntity(Member member){
+        return Calender.builder()
+                .member(member)
+                .build();
+    }
+    
 }
 

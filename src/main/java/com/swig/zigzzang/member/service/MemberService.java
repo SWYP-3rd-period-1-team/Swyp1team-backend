@@ -1,5 +1,7 @@
 package com.swig.zigzzang.member.service;
 
+import com.swig.zigzzang.calender.domain.Calender;
+import com.swig.zigzzang.calender.repository.CalenderRepository;
 import com.swig.zigzzang.email.dto.EmailResponseDto;
 import com.swig.zigzzang.email.service.EmailService;
 import com.swig.zigzzang.global.exception.HttpExceptionCode;
@@ -39,6 +41,7 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final CalenderRepository calenderRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Value("${spring.mail.auth-code-expiration-millis}")
     private long authCodeExpirationMillis;
@@ -65,6 +68,9 @@ public class MemberService {
 
         Member savedmember = memberRepository.save(member);
 
+        Calender saveEntity = memberJoinRequest.toCalenderEntity(savedmember);
+
+        calenderRepository.save(saveEntity); // 회원 가입 시 기본 캘린더 저장
 
         return savedmember;
     }
