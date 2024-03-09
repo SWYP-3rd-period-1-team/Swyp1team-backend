@@ -41,6 +41,9 @@ jobs:
           spring.data.redis.host: ${{secrets.REDIS_HOST}}
           spring.data.redis.port: ${{secrets.REDIS_PORT}}
           spring.data.redis.password: ${{secrets.REDIS_PASSWORD}}
+          cloud.aws.credentials.accessKey: ${{secrets.S3_ACCESSKEY}}
+          cloud.aws.credentials.secretKey: ${{secrets.S3_SECRETKEY}}
+          cloud.aws.s3.bucketName: ${{secrets.S3_BUCKETNAME}}
 
 
       #gradlew 실행을 위한 권한 추가
