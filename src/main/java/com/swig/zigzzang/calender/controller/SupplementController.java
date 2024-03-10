@@ -3,8 +3,9 @@ package com.swig.zigzzang.calender.controller;
 
 import com.swig.zigzzang.calender.dto.request.Supplement.SupplementSaveRequest;
 import com.swig.zigzzang.calender.dto.request.Supplement.SupplementUpdateRequest;
-import com.swig.zigzzang.calender.dto.response.Supplement.SupplementSaveResponse;
-import com.swig.zigzzang.calender.dto.response.Supplement.SupplementUpdateResponse;
+import com.swig.zigzzang.calender.dto.response.DeleteResponse;
+import com.swig.zigzzang.calender.dto.response.SaveResponse;
+import com.swig.zigzzang.calender.dto.response.UpdateResponse;
 import com.swig.zigzzang.calender.service.SupplementService;
 import com.swig.zigzzang.global.response.HttpResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,36 +25,47 @@ public class SupplementController {
 
     private final SupplementService supplementService;
 
-    @Operation(summary = "영양제 정보 저장 api", description = "하루 영양제 섭취 일정을 저장합니다.")
+    @Operation(summary = "날짜별 영양제 정보 저장 api", description = "날짜별 하루 영양제 섭취 일정을 저장합니다.")
     @PostMapping("")
-    public HttpResponse<SupplementSaveResponse> supplementSave(@Valid @RequestBody SupplementSaveRequest supplementSaveRequest) {
+    public HttpResponse<SaveResponse> supplementSave(@Valid @RequestBody SupplementSaveRequest supplementSaveRequest) {
 
         String loginUserId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         supplementService.saveSupplement(loginUserId,supplementSaveRequest);
 
         return HttpResponse.okBuild(
-                SupplementSaveResponse.of()
+                SaveResponse.of()
         );
 
     }
 
-    @Operation(summary = "영양제 정보 수정 api", description = "하루 영양제 섭취 일정을 수정 합니다.")
+    @Operation(summary = "캘린더 영양제 정보 수정 api", description = "하루 영양제 섭취 일정을 수정 합니다.")
     @PutMapping("/{supplementId}")
-    public HttpResponse<SupplementUpdateResponse> supplementModify(@Valid @RequestBody SupplementUpdateRequest supplementUpdateRequest) {
+    public HttpResponse<UpdateResponse> supplementModify(@Valid @RequestBody SupplementUpdateRequest supplementUpdateRequest,
+                                                        @PathVariable Long supplementId) {
 
         String loginUserId = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        supplementService.modifySupplement(loginUserId,supplementUpdateRequest);
+        supplementService.modifySupplement(loginUserId,supplementId,supplementUpdateRequest);
 
         return HttpResponse.okBuild(
-                SupplementUpdateResponse.of()
+                UpdateResponse.of()
         );
 
     }
 
+    @Operation(summary = "캘린더 영양제 정보 삭제 api", description = "날짜별 캘린더 영양제 정보를 삭제합니다.")
+    @DeleteMapping("/{supplementId}")
+    public HttpResponse<DeleteResponse> supplementRemove(@PathVariable Long supplementId) {
 
+        String loginUserId = SecurityContextHolder.getContext().getAuthentication().getName();
 
+        supplementService.removeSupplement(loginUserId,supplementId);
 
+        return HttpResponse.okBuild(
+                DeleteResponse.of()
+        );
+
+    }
 
 }

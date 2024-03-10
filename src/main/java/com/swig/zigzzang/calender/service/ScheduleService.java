@@ -4,9 +4,13 @@ package com.swig.zigzzang.calender.service;
 import com.swig.zigzzang.calender.domain.Calender;
 import com.swig.zigzzang.calender.domain.Schedule;
 import com.swig.zigzzang.calender.dto.request.Schedule.ScheduleSaveRequest;
+import com.swig.zigzzang.calender.dto.request.Schedule.ScheduleUpdateRequest;
 import com.swig.zigzzang.calender.excepiton.CalenderNotExistException;
-import com.swig.zigzzang.calender.repository.CalenderRepository;
-import com.swig.zigzzang.calender.repository.ScheduleRepository;
+import com.swig.zigzzang.calender.excepiton.DeleteException;
+import com.swig.zigzzang.calender.excepiton.UpdateException;
+import com.swig.zigzzang.calender.repository.Calender.CalenderRepository;
+import com.swig.zigzzang.calender.repository.Schedule.CustomScheduleRepository;
+import com.swig.zigzzang.calender.repository.Schedule.ScheduleRepository;
 import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.exception.MemberNotExistException;
 import com.swig.zigzzang.member.repository.MemberRepository;
@@ -22,6 +26,7 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final MemberRepository memberRepository;
     private final CalenderRepository calenderRepository;
+    private final CustomScheduleRepository customScheduleRepository;
 
 
     public void saveSchedule(String loginUserId, ScheduleSaveRequest scheduleSaveRequest) {
@@ -35,5 +40,23 @@ public class ScheduleService {
         Schedule saveEntity = scheduleSaveRequest.toEntity(loginMemberCalender);
 
         scheduleRepository.save(saveEntity);
+    }
+
+    public void modifySchedule(String loginUserId, Long scheduleId, ScheduleUpdateRequest scheduleUpdateRequest) {
+
+        Schedule target = customScheduleRepository.findByMemberAndCalender(loginUserId, scheduleId)
+                .orElseThrow(UpdateException::new);
+
+        target.updateEntity(scheduleUpdateRequest);
+
+        scheduleRepository.save(target);
+    }
+
+    public void removeSchedule(String loginUserId, Long scheduleId) {
+
+        Schedule target = customScheduleRepository.findByMemberAndCalender(loginUserId, scheduleId)
+                .orElseThrow(DeleteException::new);
+
+        scheduleRepository.delete(target);
     }
 }

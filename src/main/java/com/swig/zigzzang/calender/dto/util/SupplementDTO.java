@@ -1,6 +1,7 @@
 package com.swig.zigzzang.calender.dto.util;
 
 import com.swig.zigzzang.calender.domain.Supplement;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,15 +12,23 @@ import java.util.stream.Collectors;
 @Builder
 public class SupplementDTO {
 
-    Long supplementId; // 영양제 번호
+    @Schema(description = "영양제 번호", nullable = false, example = "1")
+    Long supplementId;
 
-    String supplementName; // 영양제 이름
+    @Schema(description = "영양제 이름", nullable = false, example = "영양제")
+    String supplementName;
 
-    Long supplementNumber;// 영양제 1회 섭취량
+    @Schema(description = "영양제 1회 섭취량", nullable = false, example = "30")
+    Long supplementNumber;
 
-    Long supplementFrequency; // 영양제 1일 섭취 횟수
+    @Schema(description = "영양제 1일 섭취 횟수", nullable = false, example = "3")
+    Long supplementFrequency;
 
-    Long achievement; // 진행률
+    @Schema(description = "진행률", nullable = false, example = "30")
+    Long achievement; 
+
+    @Schema(description = "캘린더 날짜", nullable = false, example = "2024-03-10")
+    String calenderDate;
 
 
     public static SupplementDTO of(Supplement supplement) {

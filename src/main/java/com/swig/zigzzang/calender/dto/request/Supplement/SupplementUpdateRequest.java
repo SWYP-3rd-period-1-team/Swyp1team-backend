@@ -23,14 +23,4 @@ public record SupplementUpdateRequest(
         Long supplementFrequency // 영양제 1일 섭취 횟수
 ) {
 
-    public Supplement toEntity(Member member, Calender calender) {
-        return Supplement.builder()
-                .name(supplementName)
-                .calender(calender)
-                .number(supplementNumber)
-                .frequency(supplementFrequency)
-                .achievement(0L) // 초기 성취도 0
-                .build();
-
-    }
 }

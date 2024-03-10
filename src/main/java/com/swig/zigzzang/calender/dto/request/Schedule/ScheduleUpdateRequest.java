@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Builder
-public record ScheduleSaveRequest(
+public record ScheduleUpdateRequest(
 
         @NotNull(message = "일정명을 입력해 주세요")
         @Schema(description = "일정명", nullable = false, example = "한의원 물리치료")
@@ -29,14 +29,4 @@ public record ScheduleSaveRequest(
 
 ) {
 
-    public Schedule toEntity(Calender calender) {
-        return Schedule.builder()
-                .calender(calender)
-                .name(scheduleName)
-                .date(scheduleDate.toString())
-                .time(scheduleTime.toString())
-                .achievement(0L) // 초기 성취도 0
-                .build();
-
-    }
 }
