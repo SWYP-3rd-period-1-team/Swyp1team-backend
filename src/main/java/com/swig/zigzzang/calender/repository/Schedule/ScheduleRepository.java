@@ -1,4 +1,4 @@
-package com.swig.zigzzang.calender.repository;
+package com.swig.zigzzang.calender.repository.Schedule;
 
 import com.swig.zigzzang.calender.domain.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;

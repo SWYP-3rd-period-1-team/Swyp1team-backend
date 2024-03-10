@@ -1,6 +1,7 @@
 package com.swig.zigzzang.calender.domain;
 
 
+import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,5 +35,12 @@ public class WaterIntake { // 물 섭취
 
     @Column
     private String calenderDate; // 캘린더 날짜
-
+    
+    
+    // 정보 수정 메서드
+    public void updateEntity(WaterIntakeUpdateRequest waterIntakeUpdateRequest){
+        this.requirement = waterIntakeUpdateRequest.waterRequirement();
+        this.capacity = waterIntakeUpdateRequest.waterCapacity();
+        this.frequency = waterIntakeUpdateRequest.waterFrequency();
+    }
 }

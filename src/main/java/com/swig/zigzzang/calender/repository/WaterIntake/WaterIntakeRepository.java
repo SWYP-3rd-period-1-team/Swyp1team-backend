@@ -1,4 +1,4 @@
-package com.swig.zigzzang.calender.repository;
+package com.swig.zigzzang.calender.repository.WaterIntake;
 
 import com.swig.zigzzang.calender.domain.WaterIntake;
 import org.springframework.data.jpa.repository.JpaRepository;

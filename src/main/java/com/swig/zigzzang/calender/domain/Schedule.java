@@ -1,6 +1,7 @@
 package com.swig.zigzzang.calender.domain;
 
 
+import com.swig.zigzzang.calender.dto.request.Schedule.ScheduleUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,8 +35,11 @@ public class Schedule { // 일정
     @Column
     private Long achievement; // 달성도
 
-    @Column
-    private String calenderDate; // 캘린더 날짜
 
-
+    // 정보 수정 메서드
+    public void updateEntity(ScheduleUpdateRequest scheduleUpdateRequest){
+        this.name = scheduleUpdateRequest.scheduleName();
+        this.date = scheduleUpdateRequest.scheduleDate().toString();
+        this.time = scheduleUpdateRequest.scheduleTime().toString();
+    }
 }
