@@ -1,6 +1,6 @@
 package com.swig.zigzzang.calender.controller;
 
-import com.swig.zigzzang.calender.dto.request.WaterIntakeSaveRequest;
+import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeSaveRequest;
 import com.swig.zigzzang.calender.dto.response.WaterIntakeSaveResponse;
 import com.swig.zigzzang.calender.service.WaterIntakeService;
 import com.swig.zigzzang.global.response.HttpResponse;

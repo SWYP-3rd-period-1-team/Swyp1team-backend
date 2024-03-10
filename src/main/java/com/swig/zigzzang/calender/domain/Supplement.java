@@ -33,5 +33,8 @@ public class Supplement { // 영양제
     @Column
     private Long achievement; // 1일 달성도
 
+    @Column
+    private String calenderDate; // 캘린더 날짜
+
 
 }

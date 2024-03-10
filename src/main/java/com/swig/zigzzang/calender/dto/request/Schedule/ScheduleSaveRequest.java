@@ -1,4 +1,4 @@
-package com.swig.zigzzang.calender.dto.request;
+package com.swig.zigzzang.calender.dto.request.Schedule;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swig.zigzzang.calender.domain.Calender;
@@ -25,7 +25,12 @@ public record ScheduleSaveRequest(
         @NotNull(message = "일정 시간을 입력해 주세요")
         @Schema(description = "일정 시간", nullable = false, example = "13:00")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-        LocalTime scheduleTime // 총 수면 시간
+        LocalTime scheduleTime, // 총 수면 시간
+
+        @NotNull(message = "캘린더 날짜를 입력해 주세요")
+        @Schema(description = "캘린더 날짜", nullable = false, example = "2024-03-10")
+        @JsonFormat(pattern = "yyyy-MM-dd")
+        LocalDate calenderDate // 캘린더 날짜
 ) {
 
     public Schedule toEntity(Calender calender) {
@@ -34,6 +39,7 @@ public record ScheduleSaveRequest(
                 .name(scheduleName)
                 .date(scheduleDate.toString())
                 .time(scheduleTime.toString())
+                .calenderDate(calenderDate.toString())
                 .achievement(0L) // 초기 성취도 0
                 .build();
 

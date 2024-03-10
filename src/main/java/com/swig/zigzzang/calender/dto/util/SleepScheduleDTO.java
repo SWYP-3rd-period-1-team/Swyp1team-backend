@@ -8,6 +8,8 @@ import lombok.Data;
 @Builder
 public class SleepScheduleDTO {
 
+    Long sleepScheduleId; // id
+
     Long sleepPeriod; // 수면 기간
 
     Long sleepTime; // 총 수면 시간

@@ -3,7 +3,7 @@ package com.swig.zigzzang.calender.service;
 
 import com.swig.zigzzang.calender.domain.Calender;
 import com.swig.zigzzang.calender.domain.Schedule;
-import com.swig.zigzzang.calender.dto.request.ScheduleSaveRequest;
+import com.swig.zigzzang.calender.dto.request.Schedule.ScheduleSaveRequest;
 import com.swig.zigzzang.calender.excepiton.CalenderNotExistException;
 import com.swig.zigzzang.calender.repository.CalenderRepository;
 import com.swig.zigzzang.calender.repository.ScheduleRepository;
