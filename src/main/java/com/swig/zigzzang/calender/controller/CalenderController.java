@@ -20,13 +20,13 @@ public class CalenderController {
 
     private final CalenderService calenderService;
 
-    @Operation(summary = "기본 캘린더 목록 api", description = "로그인 유저 기본 캘린더에 저장된 물,영양제,수면,일정 정보를 불러옵니다.")
+    @Operation(summary = "날짜별 기본 캘린더 목록 api", description = "날짜별 로그인 유저 기본 캘린더에 저장된 물,영양제,수면,일정 정보를 불러옵니다.")
     @GetMapping("/myCalenders")
-    public HttpResponse<CalenderListResponse> calenderMylist() {
+    public HttpResponse<CalenderListResponse> calenderMylist(@RequestParam("calenderDate") String calenderDate) {
 
         String loginUserId = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        MyCalenderDTO result = calenderService.myListCalender(loginUserId);
+        MyCalenderDTO result = calenderService.myListCalender(calenderDate,loginUserId);
 
         return HttpResponse.okBuild(
                 CalenderListResponse.of(result)

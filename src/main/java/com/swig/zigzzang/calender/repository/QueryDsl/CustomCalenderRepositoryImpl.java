@@ -27,14 +27,18 @@ public class CustomCalenderRepositoryImpl implements CustomCalenderRepository {
     QWaterIntake qWaterIntake = QWaterIntake.waterIntake;
 
     @Override
-    public MyCalenderDTO fetchEntitiesForMemberAndCalender(Long calenderId) {
+    public MyCalenderDTO fetchEntitiesForMemberAndCalender(String calenderDate, Long calenderId) {
         List<Tuple> results = jpaQueryFactory
                 .select(qCalender, qSchedule, qSleepSchedule, qSupplement, qWaterIntake)
                 .from(qCalender)
-                .leftJoin(qSchedule).on(qSchedule.calender.calenderId.eq(qCalender.calenderId))
-                .leftJoin(qSleepSchedule).on(qSleepSchedule.calender.calenderId.eq(qCalender.calenderId))
-                .leftJoin(qSupplement).on(qSupplement.calender.calenderId.eq(qCalender.calenderId))
-                .leftJoin(qWaterIntake).on(qWaterIntake.calender.calenderId.eq(qCalender.calenderId))
+                .leftJoin(qSchedule).on(qSchedule.calender.calenderId.eq(qCalender.calenderId)
+                        .and(qSchedule.calenderDate.eq(calenderDate)))
+                .leftJoin(qSleepSchedule).on(qSleepSchedule.calender.calenderId.eq(qCalender.calenderId)
+                        .and(qSleepSchedule.calenderDate.eq(calenderDate)))
+                .leftJoin(qSupplement).on(qSupplement.calender.calenderId.eq(qCalender.calenderId)
+                        .and(qSupplement.calenderDate.eq(calenderDate)))
+                .leftJoin(qWaterIntake).on(qWaterIntake.calender.calenderId.eq(qCalender.calenderId)
+                        .and(qWaterIntake.calenderDate.eq(calenderDate)))
                 .where(qCalender.calenderId.eq(calenderId))
                 .fetch();
 

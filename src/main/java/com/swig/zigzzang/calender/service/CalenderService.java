@@ -16,12 +16,12 @@ public class CalenderService {
     private final CustomCalenderRepository customCalenderRepository;
     private final CalenderRepository calenderRepository;
 
-    public MyCalenderDTO myListCalender(String loginUserId) {
+    public MyCalenderDTO myListCalender(String calenderDate,String loginUserId) { // 내 캘린더 목록
 
         Calender target = calenderRepository.findByMember(loginUserId)
                 .orElseThrow();
 
-        return customCalenderRepository.fetchEntitiesForMemberAndCalender(target.getCalenderId());
+        return customCalenderRepository.fetchEntitiesForMemberAndCalender(calenderDate,target.getCalenderId());
 
     }
 

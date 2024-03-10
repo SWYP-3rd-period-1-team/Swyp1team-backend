@@ -20,4 +20,6 @@ public class Calender {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "member_id")
     private Member member;
+
+
 }

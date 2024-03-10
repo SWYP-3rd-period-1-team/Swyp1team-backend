@@ -1,7 +1,7 @@
 package com.swig.zigzzang.calender.controller;
 
 
-import com.swig.zigzzang.calender.dto.request.SleepScheduleSaveRequest;
+import com.swig.zigzzang.calender.dto.request.SleepSchedule.SleepScheduleSaveRequest;
 import com.swig.zigzzang.calender.dto.response.SleepScheduleSaveResponse;
 import com.swig.zigzzang.calender.service.SleepScheduleService;
 import com.swig.zigzzang.global.response.HttpResponse;

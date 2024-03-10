@@ -1,4 +1,4 @@
-package com.swig.zigzzang.calender.dto.request;
+package com.swig.zigzzang.calender.dto.request.Supplement;
 
 import com.swig.zigzzang.calender.domain.Calender;
 import com.swig.zigzzang.calender.domain.Supplement;
@@ -6,10 +6,9 @@ import com.swig.zigzzang.member.domain.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
-import lombok.Data;
 
 @Builder
-public record SupplementSaveRequest(
+public record SupplementUpdateRequest(
 
         @NotNull(message = "영양제 이름을 입력해 주세요.")
         @Schema(description = "영양제 이름", nullable = false, example = "00 영양제")
