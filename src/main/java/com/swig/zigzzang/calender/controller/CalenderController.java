@@ -1,6 +1,6 @@
 package com.swig.zigzzang.calender.controller;
 
-import com.swig.zigzzang.calender.dto.response.CalenderListResponse;
+import com.swig.zigzzang.calender.dto.response.Calender.CalenderListResponse;
 import com.swig.zigzzang.calender.dto.util.MyCalenderDTO;
 import com.swig.zigzzang.calender.service.CalenderService;
 import com.swig.zigzzang.global.response.HttpResponse;

@@ -5,18 +5,18 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class CalenderNotExistException extends RuntimeException {
+public class DeleteException extends RuntimeException {
 
     private final HttpStatus httpStatus;
 
 
-    public CalenderNotExistException(HttpExceptionCode exceptionCode) {
+    public DeleteException(HttpExceptionCode exceptionCode) {
         super(exceptionCode.getMessage());
         this.httpStatus = exceptionCode.getHttpStatus();
     }
 
 
-    public CalenderNotExistException() {
-        this(HttpExceptionCode.CALENDER_NOT_EXIST);
+    public DeleteException() {
+        this(HttpExceptionCode.DELETE_FAILED);
     }
 }

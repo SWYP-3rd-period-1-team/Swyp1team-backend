@@ -1,4 +1,4 @@
-package com.swig.zigzzang.calender.repository;
+package com.swig.zigzzang.calender.repository.Calender;
 
 
 import com.swig.zigzzang.calender.domain.Calender;

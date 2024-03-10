@@ -1,7 +1,7 @@
 package com.swig.zigzzang.calender.domain;
 
 
-import com.swig.zigzzang.member.domain.Member;
+import com.swig.zigzzang.calender.dto.request.Supplement.SupplementUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,5 +36,12 @@ public class Supplement { // 영양제
     @Column
     private String calenderDate; // 캘린더 날짜
 
+
+    // 수정 메서드
+    public void updateEntity(SupplementUpdateRequest supplementUpdateRequest) {
+       this.name = supplementUpdateRequest.supplementName();
+       this.number = supplementUpdateRequest.supplementNumber();
+       this.frequency = supplementUpdateRequest.supplementFrequency();
+    }
 
 }

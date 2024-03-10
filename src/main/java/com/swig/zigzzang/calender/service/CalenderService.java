@@ -3,8 +3,8 @@ package com.swig.zigzzang.calender.service;
 
 import com.swig.zigzzang.calender.domain.Calender;
 import com.swig.zigzzang.calender.dto.util.MyCalenderDTO;
-import com.swig.zigzzang.calender.repository.CalenderRepository;
-import com.swig.zigzzang.calender.repository.QueryDsl.CustomCalenderRepository;
+import com.swig.zigzzang.calender.repository.Calender.CalenderRepository;
+import com.swig.zigzzang.calender.repository.Calender.CustomCalenderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +24,4 @@ public class CalenderService {
         return customCalenderRepository.fetchEntitiesForMemberAndCalender(calenderDate,target.getCalenderId());
 
     }
-
-
 }

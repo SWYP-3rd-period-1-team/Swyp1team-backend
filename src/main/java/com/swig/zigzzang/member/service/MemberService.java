@@ -1,8 +1,7 @@
 package com.swig.zigzzang.member.service;
 
 import com.swig.zigzzang.calender.domain.Calender;
-import com.swig.zigzzang.calender.repository.CalenderRepository;
-import com.swig.zigzzang.email.dto.EmailResponseDto;
+import com.swig.zigzzang.calender.repository.Calender.CalenderRepository;
 import com.swig.zigzzang.email.service.EmailService;
 import com.swig.zigzzang.global.exception.HttpExceptionCode;
 import com.swig.zigzzang.global.exception.custom.security.IncorrectRefreshTokenException;

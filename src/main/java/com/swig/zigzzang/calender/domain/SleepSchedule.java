@@ -1,6 +1,7 @@
 package com.swig.zigzzang.calender.domain;
 
 
+import com.swig.zigzzang.calender.dto.request.SleepSchedule.SleepScheduleUpdateRequest;
 import com.swig.zigzzang.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,4 +34,10 @@ public class SleepSchedule {
     @Column
     private String calenderDate; // 캘린더 날짜
 
+    
+    // 정보 수정 메서드
+    public void updateEntity(SleepScheduleUpdateRequest sleepScheduleUpdateRequest){
+        this.period = sleepScheduleUpdateRequest.sleepPeriod();
+        this.time = sleepScheduleUpdateRequest.sleepTime();
+    }
 }
