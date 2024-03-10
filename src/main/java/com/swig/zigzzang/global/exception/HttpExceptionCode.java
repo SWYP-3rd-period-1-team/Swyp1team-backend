@@ -46,8 +46,6 @@ public enum HttpExceptionCode {
     DELETE_FAILED(HttpStatus.UNAUTHORIZED, "삭제 중 오류가 발생하였습니다."),
     RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 리소스를 찾을 수 없습니다,"),
 
-    CALENDER_NOT_EXIST(HttpStatus.NOT_FOUND,"해당 유저의 캘린더를 찾을 수 없습니다."),
-    IMAGE_UPLOAD_FAILED(HttpStatus.NOT_FOUND,"이미지 업로드에 실패하였습니다."),
     EMAIL_ALREADY_EXIST(HttpStatus.CONFLICT,"이미 존재하는 이메일 입니다.");
 
     private final HttpStatus httpStatus;
