@@ -1,6 +1,5 @@
-package com.swig.zigzzang.calender.dto.response;
+package com.swig.zigzzang.calender.dto.response.Supplement;
 
-import com.swig.zigzzang.hospital.dto.response.CommentDeleteResponse;
 import lombok.Builder;
 
 @Builder

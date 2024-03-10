@@ -34,5 +34,8 @@ public class Schedule { // 일정
     @Column
     private Long achievement; // 달성도
 
+    @Column
+    private String calenderDate; // 캘린더 날짜
+
 
 }

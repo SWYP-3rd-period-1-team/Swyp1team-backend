@@ -3,7 +3,7 @@ package com.swig.zigzzang.calender.service;
 
 import com.swig.zigzzang.calender.domain.Calender;
 import com.swig.zigzzang.calender.domain.WaterIntake;
-import com.swig.zigzzang.calender.dto.request.WaterIntakeSaveRequest;
+import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeSaveRequest;
 import com.swig.zigzzang.calender.excepiton.CalenderNotExistException;
 import com.swig.zigzzang.calender.repository.CalenderRepository;
 import com.swig.zigzzang.calender.repository.WaterIntakeRepository;

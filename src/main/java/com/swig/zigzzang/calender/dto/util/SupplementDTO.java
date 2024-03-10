@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 @Builder
 public class SupplementDTO {
 
+    Long supplementId; // 영양제 번호
+
     String supplementName; // 영양제 이름
 
     Long supplementNumber;// 영양제 1회 섭취량
@@ -22,9 +24,11 @@ public class SupplementDTO {
 
     public static SupplementDTO of(Supplement supplement) {
         return SupplementDTO.builder()
+                .supplementId(supplement.getSupplementId())
                 .supplementName(supplement.getName())
                 .supplementNumber(supplement.getNumber())
                 .supplementFrequency(supplement.getFrequency())
+                .achievement(supplement.getAchievement())
                 .build();
     }
 
