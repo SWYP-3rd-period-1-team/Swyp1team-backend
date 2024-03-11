@@ -63,12 +63,11 @@ public class MemberController {
 
     public HttpResponse<MemberLogoutResponse> logout(HttpServletRequest request) {
 
-        String username= memberService.getUsernameBySecurityContext();
         String encryptedRefreshToken = jwtUtil.getRefreshToken(request);
         String blacklist = memberService.logout(encryptedRefreshToken);
 
         return HttpResponse.okBuild(
-                MemberLogoutResponse.from(username,blacklist)
+                MemberLogoutResponse.from(blacklist)
         );
     }
 
