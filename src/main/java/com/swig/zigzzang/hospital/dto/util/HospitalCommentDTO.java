@@ -15,7 +15,11 @@ public class HospitalCommentDTO {
 
     private Long hospitalCommentId; // 병원 댓글 ID
 
-    private Long memberId; // 작성 회원번호
+    private Long memberId; // 작성 회원 번호
+
+    private String imageUrl; // 프로필 이미지
+    
+    private String nickName; // 회원 닉네임
 
     private String content; // 댓글 내용
 
@@ -25,7 +29,7 @@ public class HospitalCommentDTO {
 
     private LocalDate lastModifyDate; // 최근 수정 날짜
 
-    private List<HospitalCommentDTO> children = new ArrayList<>();
+    private List<HospitalCommentDTO> children;
 
 
     public static HospitalCommentDTO of(HospitalComment hospitalComment) {
@@ -34,6 +38,8 @@ public class HospitalCommentDTO {
                 HospitalCommentDTO.builder()
                         .hospitalCommentId(hospitalComment.getHospitalCommentId())
                         .memberId(hospitalComment.getMember().getMemberId())
+                        .imageUrl(hospitalComment.getMember().getProfileimage())
+                        .nickName(hospitalComment.getMember().getNickname())
                         .content("삭제된 댓글입니다.")
                         .reportCount(hospitalComment.getReportCount())
                         .star(hospitalComment.getStar())
@@ -44,6 +50,8 @@ public class HospitalCommentDTO {
                 HospitalCommentDTO.builder()
                         .hospitalCommentId(hospitalComment.getHospitalCommentId())
                         .memberId(hospitalComment.getMember().getMemberId())
+                        .imageUrl(hospitalComment.getMember().getProfileimage())
+                        .nickName(hospitalComment.getMember().getNickname())
                         .content(hospitalComment.getContent())
                         .reportCount(hospitalComment.getReportCount())
                         .star(hospitalComment.getStar())
