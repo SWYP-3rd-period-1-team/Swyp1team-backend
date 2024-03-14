@@ -85,7 +85,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
 
-                        .requestMatchers("/api/members/join","api/members/refresh","/login").permitAll()
+                        .requestMatchers("/api/members/join","api/members/refresh","/login","api/members/logout").permitAll()
                         .requestMatchers("/api/members/find-id","api/members/find-password","/userinfo","/","/index.html").permitAll()
                         .requestMatchers("/api/emails/verification-requests","api/emails/verifications").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/hospitals").permitAll()
