@@ -7,7 +7,7 @@
 <div align="center">
 
   💻 나에게 건강을 맞겨줘 ! 종합 건강관리 플랫폼, <br>
-  🖋 [직짱건강](www.zigzzang.site)
+  🖋 [직짱건강](https://www.zigzzang.site)
 
 </div>
 <br/>
