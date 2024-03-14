@@ -35,7 +35,6 @@ public record ScheduleSaveRequest(
                 .name(scheduleName)
                 .date(scheduleDate.toString())
                 .time(scheduleTime.toString())
-                .achievement(0L) // 초기 성취도 0
                 .build();
 
     }

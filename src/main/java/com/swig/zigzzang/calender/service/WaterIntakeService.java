@@ -3,6 +3,7 @@ package com.swig.zigzzang.calender.service;
 
 import com.swig.zigzzang.calender.domain.Calender;
 import com.swig.zigzzang.calender.domain.WaterIntake;
+import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeAchieveUpdateRequest;
 import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeSaveRequest;
 import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeUpdateRequest;
 import com.swig.zigzzang.calender.excepiton.CalenderNotExistException;
@@ -59,5 +60,15 @@ public class WaterIntakeService {
 
         waterIntakeRepository.delete(target);
 
+    }
+
+    public void modifyWaterIntakeAchieve(String loginUserId, Long waterIntakeId, WaterIntakeAchieveUpdateRequest waterIntakeAchieveUpdateRequest) {
+
+        WaterIntake target = customWaterIntakeRepository.findByMemberAndCalender(loginUserId, waterIntakeId)
+                .orElseThrow(UpdateException::new);
+
+        target.updateAchieveEntity(waterIntakeAchieveUpdateRequest);
+
+        waterIntakeRepository.save(target);
     }
 }

@@ -3,6 +3,7 @@ package com.swig.zigzzang.calender.service;
 
 import com.swig.zigzzang.calender.domain.Calender;
 import com.swig.zigzzang.calender.domain.Supplement;
+import com.swig.zigzzang.calender.dto.request.Supplement.SupplementAchieveUpdateRequest;
 import com.swig.zigzzang.calender.dto.request.Supplement.SupplementSaveRequest;
 import com.swig.zigzzang.calender.dto.request.Supplement.SupplementUpdateRequest;
 import com.swig.zigzzang.calender.excepiton.CalenderNotExistException;
@@ -58,5 +59,18 @@ public class SupplementService {
                 .orElseThrow(DeleteException::new);
 
         supplementRepository.delete(target);
+    }
+    
+    
+    // 달성도 업데이트
+    public void modifySupplementAchieve(String loginUserId, Long supplementId, SupplementAchieveUpdateRequest supplementAchieveUpdateRequest) {
+
+        Supplement target = customSupplementRepository.findByMemberAndCalender(loginUserId, supplementId)
+                .orElseThrow(UpdateException::new);
+
+        target.updateAchieveEntity(supplementAchieveUpdateRequest);
+
+        supplementRepository.save(target);
+
     }
 }

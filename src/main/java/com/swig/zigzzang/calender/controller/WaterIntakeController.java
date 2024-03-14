@@ -1,6 +1,8 @@
 package com.swig.zigzzang.calender.controller;
 
+import com.swig.zigzzang.calender.dto.request.Supplement.SupplementAchieveUpdateRequest;
 import com.swig.zigzzang.calender.dto.request.Supplement.SupplementUpdateRequest;
+import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeAchieveUpdateRequest;
 import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeSaveRequest;
 import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeUpdateRequest;
 import com.swig.zigzzang.calender.dto.response.DeleteResponse;
@@ -52,6 +54,22 @@ public class WaterIntakeController {
         );
 
     }
+
+    @Operation(summary = "캘린더 물 성취도 수정 api", description = "하루 물 섭취 성취도를 수정 합니다.")
+    @PutMapping("/{waterIntakeId}/achievement")
+    public HttpResponse<UpdateResponse> waterIntakeAchieveModify(@Valid @RequestBody WaterIntakeAchieveUpdateRequest waterIntakeAchieveUpdateRequest,
+                                                                @PathVariable Long waterIntakeId) {
+
+        String loginUserId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        waterIntakeService.modifyWaterIntakeAchieve(loginUserId,waterIntakeId,waterIntakeAchieveUpdateRequest);
+
+        return HttpResponse.okBuild(
+                UpdateResponse.of()
+        );
+
+    }
+
 
     @Operation(summary = "캘린더 물 정보 삭제 api", description = "날짜별 물 정보를 삭제합니다.")
     @DeleteMapping("/{waterIntakeId}")

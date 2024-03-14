@@ -39,7 +39,7 @@ public record SupplementSaveRequest(
                 .number(supplementNumber)
                 .frequency(supplementFrequency)
                 .calenderDate(calenderDate.toString())
-                .achievement(0L) // 초기 성취도 0
+                .achieveArray(null)
                 .build();
 
     }

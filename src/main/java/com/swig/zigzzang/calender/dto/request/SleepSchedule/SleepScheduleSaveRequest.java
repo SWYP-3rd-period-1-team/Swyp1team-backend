@@ -16,7 +16,7 @@ public record SleepScheduleSaveRequest(
 
         @NotNull(message = "수면 기간을 입력해 주세요")
         @Schema(description = "수면 기간", nullable = false, example = "24000700")
-        Long sleepPeriod, // 수면 기간
+        String sleepPeriod, // 수면 기간
 
         @NotNull(message = "수면 시간을 입력해 주세요")
         @Schema(description = "총 수면시간", nullable = false, example = "7")
@@ -31,10 +31,10 @@ public record SleepScheduleSaveRequest(
     public SleepSchedule toEntity(Calender calender) {
         return SleepSchedule.builder()
                 .calender(calender)
-                .period(sleepPeriod)
+                .period(Long.valueOf(sleepPeriod))
                 .time(sleepTime)
                 .calenderDate(calenderDate.toString())
-                .achievement(0L) // 초기 성취도 0
+                .achieveArray(null)
                 .build();
 
     }

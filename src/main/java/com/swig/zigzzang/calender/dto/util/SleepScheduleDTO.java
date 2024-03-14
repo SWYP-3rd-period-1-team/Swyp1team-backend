@@ -13,25 +13,25 @@ public class SleepScheduleDTO {
     Long sleepScheduleId; // id
 
     @Schema(description = " 수면 기간", nullable = false, example = "23000700(=> 23:00~07:00)")
-    Long sleepPeriod;
+    String sleepPeriod;
 
     @Schema(description = "총 수면 시간", nullable = false, example = "2024-03-10")
     Long sleepTime;
 
-    @Schema(description = "진행률", nullable = false, example = "30")
-    Long achievement;  // 진행률
-
     @Schema(description = "캘린더 날짜", nullable = false, example = "2024-03-10")
     String calenderDate;
 
+    @Schema(description = "수면 스케줄 달성도", nullable = false, example = "true")
+    Boolean sleepScheduleAchievement;
 
     // entity -> dto
     public static SleepScheduleDTO of(SleepSchedule sleepSchedule) {
         return SleepScheduleDTO.builder()
                 .sleepScheduleId(sleepSchedule.getSleepScheduleId())
-                .sleepPeriod(sleepSchedule.getPeriod())
+                .sleepPeriod(String.valueOf(sleepSchedule.getPeriod()))
                 .sleepTime(sleepSchedule.getTime())
-                .achievement(sleepSchedule.getAchievement())
+                .calenderDate(sleepSchedule.getCalenderDate())
+                .sleepScheduleAchievement(sleepSchedule.getAchieveArray())
                 .build();
 
     }

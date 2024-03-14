@@ -32,8 +32,6 @@ public class Schedule { // 일정
     @Column
     private String time; // 스케쥴 시간
 
-    @Column
-    private Long achievement; // 달성도
 
 
     // 정보 수정 메서드
