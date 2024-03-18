@@ -11,7 +11,19 @@
 
 </div>
 <br/>
+<p align="center">
+  도메인 : www.zigzzang.site 
+</p>
+<br>
 
+<br>
+
+## ✈️ 프로젝트 소개
+위치기반 병원 정보 제공과 건강 설문을 통하여 원하는 질병의 전문 병원을 찾을 목적으로 하는 웹서비스입니다.
+- 건강설문후 질병코드별 병원추천 알고리즘
+- 병원별 퍼블릭한 사용자 정보(사진) 등록 및 리댓, 신고기능 커뮤니티
+- 현재 위치기반 추천 서비스, 공공데이터 기반 병원 DB 이용
+- 질병 캘린더를 통한 건강관리 기능
 
 ## 🧑🏻‍💻 기술 스택
 ### BE
@@ -25,15 +37,21 @@
 
 <img src="https://img.shields.io/badge/GithubActions-2088FF?style=flat&logo=githubactions&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/redis-DC382D?style=flat&logo=redis&logoColor=white"/>
 
+**🛠 SCM** <br>
+<img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=swagger&logoColor=white"/>
+<img src="https://img.shields.io/badge/Discord-5865F2?style=flat-square&logo=discord&logoColor=white"/>
+<img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white"/>
+<img src="https://img.shields.io/badge/Amazon_AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white"/>
+
 ## 💻 개발자
 - Back-end : [최동훈](https://github.com/ulsandonghun), [최지웅](https://github.com/wooni423)
 
 
 
 ## ⚙️ 직짱건강 프로젝트는 이렇게 배포돼요!
+![image 181](https://github.com/SWYP-3rd-period-1-team/.github/assets/58305106/17c1ccae-748f-41fd-b162-2f2819ae2815)
 
 
-<img src="https://github.com/SWYP-3rd-period-1-team/zigzzang-backend/assets/58305106/280aeb89-089c-4a8d-9b85-a44d1f977e2c" alt="pick-git-logo" width="80%" style="height: auto;">
 
 ###   [feature branch workflow](https://gmlwjd9405.github.io/2017/10/27/how-to-collaborate-on-GitHub-1.html)에 따라 개발을 진행합니다
 
