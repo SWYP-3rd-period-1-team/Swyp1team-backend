@@ -1,7 +1,6 @@
 package com.swig.zigzzang.calender.domain;
 
 
-import com.swig.zigzzang.calender.dto.request.Supplement.SupplementAchieveUpdateRequest;
 import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeAchieveUpdateRequest;
 import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeUpdateRequest;
 import com.swig.zigzzang.global.converter.BooleanArrayToStringConverter;
@@ -20,7 +19,7 @@ public class WaterIntake { // 물 섭취
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long waterIntakeId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "calender_id")
     private Calender calender;
 
