@@ -17,7 +17,7 @@ spring:
     database: mysql
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     defer-datasource-initialization: true
   jwt:
     secret: ${jwt_secret}
