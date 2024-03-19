@@ -20,7 +20,7 @@ public class WaterIntake { // 물 섭취
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long waterIntakeId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "calender_id")
     private Calender calender;
 
