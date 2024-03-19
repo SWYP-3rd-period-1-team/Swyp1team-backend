@@ -1,7 +1,6 @@
 package com.swig.zigzzang.calender.domain;
 
 
-import com.swig.zigzzang.calender.dto.request.Supplement.SupplementAchieveUpdateRequest;
 import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeAchieveUpdateRequest;
 import com.swig.zigzzang.calender.dto.request.WaterIntake.WaterIntakeUpdateRequest;
 import com.swig.zigzzang.global.converter.BooleanArrayToStringConverter;
