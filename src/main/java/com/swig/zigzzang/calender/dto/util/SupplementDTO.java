@@ -24,11 +24,11 @@ public class SupplementDTO {
     @Schema(description = "영양제 1일 섭취 횟수", nullable = false, example = "3")
     Long supplementFrequency;
 
-    @Schema(description = "진행률", nullable = false, example = "30")
-    Long achievement; 
-
     @Schema(description = "캘린더 날짜", nullable = false, example = "2024-03-10")
     String calenderDate;
+
+    @Schema(description = "달성도 boolean 가변 배열", nullable = false, example = "[true,false,true,false]")
+    Boolean [] supplementAchieveArray;
 
 
     public static SupplementDTO of(Supplement supplement) {
@@ -37,7 +37,8 @@ public class SupplementDTO {
                 .supplementName(supplement.getName())
                 .supplementNumber(supplement.getNumber())
                 .supplementFrequency(supplement.getFrequency())
-                .achievement(supplement.getAchievement())
+                .calenderDate(supplement.getCalenderDate())
+                .supplementAchieveArray(supplement.getAchieveArray())
                 .build();
     }
 

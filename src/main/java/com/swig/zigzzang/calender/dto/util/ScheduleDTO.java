@@ -24,10 +24,7 @@ public class ScheduleDTO {
     @Schema(description = "스케쥴 시간", nullable = false, example = "")
     String scheduleTime;
 
-    @Schema(description = "진행률", nullable = false, example = "1")
-    Long achievement;
 
-    
     // entity -> dto
     public static ScheduleDTO of(Schedule schedule) {
         return ScheduleDTO.builder()
@@ -35,7 +32,6 @@ public class ScheduleDTO {
                 .scheduleName(schedule.getName())
                 .scheduleDate(schedule.getDate())
                 .scheduleTime(schedule.getTime())
-                .achievement(schedule.getAchievement())
                 .build();
     }
 

@@ -1,8 +1,5 @@
 package com.swig.zigzzang.calender.dto.request.Supplement;
 
-import com.swig.zigzzang.calender.domain.Calender;
-import com.swig.zigzzang.calender.domain.Supplement;
-import com.swig.zigzzang.member.domain.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

@@ -3,8 +3,10 @@ package com.swig.zigzzang.calender.service;
 
 import com.swig.zigzzang.calender.domain.Calender;
 import com.swig.zigzzang.calender.domain.SleepSchedule;
+import com.swig.zigzzang.calender.dto.request.SleepSchedule.SleepScheduleAchieveUpdateRequest;
 import com.swig.zigzzang.calender.dto.request.SleepSchedule.SleepScheduleSaveRequest;
 import com.swig.zigzzang.calender.dto.request.SleepSchedule.SleepScheduleUpdateRequest;
+import com.swig.zigzzang.calender.dto.request.Supplement.SupplementAchieveUpdateRequest;
 import com.swig.zigzzang.calender.excepiton.CalenderNotExistException;
 import com.swig.zigzzang.calender.excepiton.DeleteException;
 import com.swig.zigzzang.calender.excepiton.UpdateException;
@@ -57,5 +59,15 @@ public class SleepScheduleService {
 
         sleepScheduleRepository.delete(target);
 
+    }
+
+    public void modifySleepScheduleAchieve(String loginUserId, Long sleepScheduleId, SleepScheduleAchieveUpdateRequest sleepScheduleAchieveUpdateRequest) {
+
+        SleepSchedule target = customSleepScheduleRepository.findByMemberAndCalender(loginUserId, sleepScheduleId)
+                .orElseThrow(UpdateException::new);
+
+        target.updateAchieveEntity(sleepScheduleAchieveUpdateRequest);
+
+        sleepScheduleRepository.save(target);
     }
 }

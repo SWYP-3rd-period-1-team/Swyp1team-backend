@@ -1,6 +1,7 @@
 package com.swig.zigzzang.calender.controller;
 
 
+import com.swig.zigzzang.calender.dto.request.Supplement.SupplementAchieveUpdateRequest;
 import com.swig.zigzzang.calender.dto.request.Supplement.SupplementSaveRequest;
 import com.swig.zigzzang.calender.dto.request.Supplement.SupplementUpdateRequest;
 import com.swig.zigzzang.calender.dto.response.DeleteResponse;
@@ -47,6 +48,21 @@ public class SupplementController {
         String loginUserId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         supplementService.modifySupplement(loginUserId,supplementId,supplementUpdateRequest);
+
+        return HttpResponse.okBuild(
+                UpdateResponse.of()
+        );
+
+    }
+
+    @Operation(summary = "캘린더 영양제 성취도 수정 api", description = "하루 영양제 섭취 일정을 수정 합니다.")
+    @PutMapping("/{supplementId}/achievement")
+    public HttpResponse<UpdateResponse> supplementAchieveModify(@Valid @RequestBody SupplementAchieveUpdateRequest supplementAchieveUpdateRequest,
+                                                         @PathVariable Long supplementId) {
+
+        String loginUserId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        supplementService.modifySupplementAchieve(loginUserId,supplementId,supplementAchieveUpdateRequest);
 
         return HttpResponse.okBuild(
                 UpdateResponse.of()

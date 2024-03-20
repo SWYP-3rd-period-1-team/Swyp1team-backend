@@ -1,8 +1,10 @@
 package com.swig.zigzzang.calender.controller;
 
 
+import com.swig.zigzzang.calender.dto.request.SleepSchedule.SleepScheduleAchieveUpdateRequest;
 import com.swig.zigzzang.calender.dto.request.SleepSchedule.SleepScheduleSaveRequest;
 import com.swig.zigzzang.calender.dto.request.SleepSchedule.SleepScheduleUpdateRequest;
+import com.swig.zigzzang.calender.dto.request.Supplement.SupplementAchieveUpdateRequest;
 import com.swig.zigzzang.calender.dto.request.Supplement.SupplementUpdateRequest;
 import com.swig.zigzzang.calender.dto.response.DeleteResponse;
 import com.swig.zigzzang.calender.dto.response.SaveResponse;
@@ -49,6 +51,21 @@ public class SleepScheduleController {
         String loginUserId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         sleepScheduleService.modifySleepSchedule(loginUserId,sleepScheduleId,sleepScheduleUpdateRequest);
+
+        return HttpResponse.okBuild(
+                UpdateResponse.of()
+        );
+
+    }
+
+    @Operation(summary = "캘린더 수면 성취도 수정 api", description = "하루 수면 성취도를 수정 합니다.")
+    @PutMapping("/{sleepScheduleId}/achievement")
+    public HttpResponse<UpdateResponse> sleepScheduleAchieveModify(@Valid @RequestBody SleepScheduleAchieveUpdateRequest sleepScheduleAchieveUpdateRequest,
+                                                                @PathVariable Long sleepScheduleId) {
+
+        String loginUserId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        sleepScheduleService.modifySleepScheduleAchieve(loginUserId,sleepScheduleId,sleepScheduleAchieveUpdateRequest);
 
         return HttpResponse.okBuild(
                 UpdateResponse.of()

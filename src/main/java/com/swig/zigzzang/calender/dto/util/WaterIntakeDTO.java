@@ -21,11 +21,11 @@ public class WaterIntakeDTO {
     @Schema(description = "물 1회 섭취량", nullable = false, example = "750")
     Long waterCapacity; // 물 1회 섭취량
 
-    @Schema(description = "진행률", nullable = false, example = "30")
-    Long achievement; // 진행률
-
     @Schema(description = "캘린더 날짜", nullable = false, example = "2024-03-10")
     String calenderDate;
+
+    @Schema(description = "달성도 boolean 가변 배열", nullable = false, example = "[true,false,true,false]")
+    Boolean [] supplementAchieveArray;
 
 
     // entity -> dto
@@ -35,7 +35,8 @@ public class WaterIntakeDTO {
                 .waterRequirement(waterIntake.getRequirement())
                 .waterFrequency(waterIntake.getFrequency())
                 .waterCapacity(waterIntake.getCapacity())
-                .achievement(waterIntake.getAchievement())
+                .calenderDate(waterIntake.getCalenderDate())
+                .supplementAchieveArray(waterIntake.getAchieveArray())
                 .build();
     }
 }
