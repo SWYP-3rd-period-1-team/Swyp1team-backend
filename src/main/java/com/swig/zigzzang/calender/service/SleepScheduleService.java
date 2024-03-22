@@ -16,6 +16,7 @@ import com.swig.zigzzang.calender.repository.SleepSchedule.SleepScheduleReposito
 import com.swig.zigzzang.member.domain.Member;
 import com.swig.zigzzang.member.exception.MemberNotExistException;
 import com.swig.zigzzang.member.repository.MemberRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,11 @@ public class SleepScheduleService {
 
         Calender loginMemberCalender = calenderRepository.findByMember(loginUserId)
                 .orElseThrow(CalenderNotExistException::new);
+        Optional<SleepSchedule> sleepSchedule = sleepScheduleRepository.findByCalender(loginMemberCalender);
+
+        if (sleepSchedule.isPresent()) {
+            sleepScheduleRepository.delete(sleepSchedule.get());
+        }
 
         SleepSchedule saveEntity = sleepScheduleSaveRequest.toEntity(loginMemberCalender);
 
