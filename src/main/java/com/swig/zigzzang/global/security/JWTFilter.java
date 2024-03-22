@@ -10,6 +10,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import org.springdoc.api.ErrorMessage;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -59,7 +61,10 @@ public class JWTFilter extends OncePerRequestFilter {
             return;
         }
 
-        System.out.println("authorization now");
+        ZoneId koreaZone = ZoneId.of("Asia/Seoul");
+        LocalDateTime now = LocalDateTime.now(koreaZone);
+        System.out.println("time : "+now);
+
 
         String token = JWTUtil.extractHeader(request);
 
