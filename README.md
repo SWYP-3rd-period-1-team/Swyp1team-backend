@@ -46,11 +46,48 @@
 ## 💻 개발자
 - Back-end : [최동훈](https://github.com/ulsandonghun), [최지웅](https://github.com/wooni423)
 
+## 👩‍💻 백엔드
+<table>
+<tr height="140px">
+    <td align="center" width="130px">
+        멤버
+    </td>   
+    <td align="center" width="130px">
+        <a href="https://github.com/ulsandonghun"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/ulsandonghun"/></a>
+        <br />
+        <a href="https://github.com/ulsandonghun">최동훈(BE)</a>
+    </td>
+    <td align="center" width="130px">
+        <a href="https://github.com/wooni423"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/wooni423"/></a>
+        <br />
+        <a href="https://github.com/wooni423">최지웅(BE)</a>
+    </td>
+
+
+</tr>
+<tr>
+    <td align="center" width="130px">
+        기여
+    </td>
+    <td align="center" width="130px">
+        회원,질병설문, CI/CD
+    </td>
+    <td align="center" width="130px">
+        병원,질병캘린더
+    </td>
+
+
+</tr>
+</table>
+
 
 
 ## ⚙️ 직짱건강 프로젝트는 이렇게 배포돼요!
 ![image 181](https://github.com/SWYP-3rd-period-1-team/.github/assets/58305106/17c1ccae-748f-41fd-b162-2f2819ae2815)
 
+## ⚙ 서버 아키텍쳐
+
+<img width="1127" alt="image" src="https://github.com/SWYP-3rd-period-1-team/zigzzang-backend/assets/58305106/0726af6e-8f8e-466c-916e-58b3ed3d190a">
 
 
 ###   [feature branch workflow](https://gmlwjd9405.github.io/2017/10/27/how-to-collaborate-on-GitHub-1.html)에 따라 개발을 진행합니다
