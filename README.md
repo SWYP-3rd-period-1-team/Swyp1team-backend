@@ -25,23 +25,6 @@
 - 현재 위치기반 추천 서비스, 공공데이터 기반 병원 DB 이용
 - 질병 캘린더를 통한 건강관리 기능
 
-## 🧑🏻‍💻 기술 스택
-### BE
-<img src="https://img.shields.io/badge/Java 17-007396?style=flat&logo=java&logoColor=white"/>
-
-<img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=spring&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring MVC-6DB33F?style=flat&logo=spring&logoColor=white"/>  <img src="https://img.shields.io/badge/Spring Data JPA-6DB33F?style=flat&logo=spring&logoColor=white"/> <img src="https://img.shields.io/badge/JPA-orange?style=flat&logo=JPA&logoColor=white"/> <img src="https://img.shields.io/badge/Hibernate-orange?style=flat&logo=Hibernate&logoColor=white"/> <img src="https://img.shields.io/badge/Querydsl-orange?style=flat&logo=querydsl&logoColor=white"/> <img src="https://img.shields.io/badge/Junit5-blue?style=flat&logo=Junit5&logoColor=white"/>
-
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white"/> 
-
-<img src="https://img.shields.io/badge/EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/RDS-527FFF?style=flat&logo=amazonrds&logoColor=white"/> <img src="https://img.shields.io/badge/ELB-FF9900?style=flat&logo=amazon elb&logoColor=white"/> <img src="https://img.shields.io/badge/Api Gateway-FF9900?style=flat&logo=amazonapigateway&logoColor=white"/> 
-
-<img src="https://img.shields.io/badge/GithubActions-2088FF?style=flat&logo=githubactions&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/redis-DC382D?style=flat&logo=redis&logoColor=white"/>
-
-**🛠 SCM** <br>
-<img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=swagger&logoColor=white"/>
-<img src="https://img.shields.io/badge/Discord-5865F2?style=flat-square&logo=discord&logoColor=white"/>
-<img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white"/>
-<img src="https://img.shields.io/badge/Amazon_AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white"/>
 
 ## 💻 개발자
 - Back-end : [최동훈](https://github.com/ulsandonghun), [최지웅](https://github.com/wooni423)
@@ -89,6 +72,23 @@
 
 <img width="1127" alt="image" src="https://github.com/SWYP-3rd-period-1-team/zigzzang-backend/assets/58305106/0726af6e-8f8e-466c-916e-58b3ed3d190a">
 
+## 🧑🏻‍💻 기술 스택
+### BE
+<img src="https://img.shields.io/badge/Java 17-007396?style=flat&logo=java&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=spring&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring MVC-6DB33F?style=flat&logo=spring&logoColor=white"/>  <img src="https://img.shields.io/badge/Spring Data JPA-6DB33F?style=flat&logo=spring&logoColor=white"/> <img src="https://img.shields.io/badge/JPA-orange?style=flat&logo=JPA&logoColor=white"/> <img src="https://img.shields.io/badge/Hibernate-orange?style=flat&logo=Hibernate&logoColor=white"/> <img src="https://img.shields.io/badge/Querydsl-orange?style=flat&logo=querydsl&logoColor=white"/> <img src="https://img.shields.io/badge/Junit5-blue?style=flat&logo=Junit5&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white"/> 
+
+<img src="https://img.shields.io/badge/EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/RDS-527FFF?style=flat&logo=amazonrds&logoColor=white"/> <img src="https://img.shields.io/badge/ELB-FF9900?style=flat&logo=amazon elb&logoColor=white"/> <img src="https://img.shields.io/badge/Api Gateway-FF9900?style=flat&logo=amazonapigateway&logoColor=white"/> 
+
+<img src="https://img.shields.io/badge/GithubActions-2088FF?style=flat&logo=githubactions&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/redis-DC382D?style=flat&logo=redis&logoColor=white"/>
+
+**🛠 SCM** <br>
+<img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=swagger&logoColor=white"/>
+<img src="https://img.shields.io/badge/Discord-5865F2?style=flat-square&logo=discord&logoColor=white"/>
+<img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white"/>
+<img src="https://img.shields.io/badge/Amazon_AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white"/>
 ## 💻DB 설계
 
 <img width="1127" alt="image" src="https://github.com/SWYP-3rd-period-1-team/zigzzang-backend/assets/58305106/8f50596a-387e-4244-82bc-2ce7ad98f7e3">
