@@ -89,6 +89,9 @@
 
 <img width="1127" alt="image" src="https://github.com/SWYP-3rd-period-1-team/zigzzang-backend/assets/58305106/0726af6e-8f8e-466c-916e-58b3ed3d190a">
 
+## 💻DB 설계
+
+<img width="1127" alt="image" src="https://github.com/SWYP-3rd-period-1-team/zigzzang-backend/assets/58305106/8f50596a-387e-4244-82bc-2ce7ad98f7e3">
 
 ###   [feature branch workflow](https://gmlwjd9405.github.io/2017/10/27/how-to-collaborate-on-GitHub-1.html)에 따라 개발을 진행합니다
 
